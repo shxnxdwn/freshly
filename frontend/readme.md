@@ -1,3 +1,3 @@
 # Freshly
 
-Пет-проект интернет магазина на Next.js
+Frontend часть Freshly
