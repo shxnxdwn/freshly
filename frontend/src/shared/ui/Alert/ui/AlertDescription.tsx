@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { cn } from '@/shared/lib/utils';
 
-export const AlertDescription = (props: React.ComponentProps<'div'>) => {
+export type AlertDescriptionProps = React.ComponentProps<'div'>;
+
+export const AlertDescription = (props: AlertDescriptionProps) => {
   const { className, ...rest } = props;
 
   return (
