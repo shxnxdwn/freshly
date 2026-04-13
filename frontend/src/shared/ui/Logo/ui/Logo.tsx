@@ -4,25 +4,28 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { Slot } from 'radix-ui';
 import { cn } from '@/shared/lib/utils';
 
-const logoVariants = cva('inline-flex items-center gap-2 font-bold tracking-tighter transition-colors select-none', {
-  variants: {
-    variant: {
-      default: 'text-foreground',
-      primary: 'text-primary',
-      muted: 'text-muted-foreground'
+export const logoVariants = cva(
+  'inline-flex items-center gap-2 font-bold tracking-tighter transition-colors select-none',
+  {
+    variants: {
+      variant: {
+        default: 'text-foreground',
+        primary: 'text-primary',
+        muted: 'text-muted-foreground'
+      },
+      size: {
+        default: 'text-xl',
+        sm: 'text-lg',
+        lg: 'text-2xl',
+        xl: 'text-3xl'
+      }
     },
-    size: {
-      default: 'text-xl',
-      sm: 'text-lg',
-      lg: 'text-2xl',
-      xl: 'text-3xl'
+    defaultVariants: {
+      variant: 'default',
+      size: 'default'
     }
-  },
-  defaultVariants: {
-    variant: 'default',
-    size: 'default'
   }
-});
+);
 
 export type LogoProps = React.ComponentProps<typeof Link> &
   VariantProps<typeof logoVariants> & {
