@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Geist_Mono, Inter } from 'next/font/google';
 import '@/app/globals.css';
 import type { ReactNode } from 'react';
+import { TooltipProvider } from '@/shared/ui/Tooltip';
 
 const interSans = Inter({
   variable: '--font-inter-sans',
@@ -25,10 +26,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body
-        className={`${interSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={`${interSans.variable} ${geistMono.variable} antialiased`}>
+        <TooltipProvider>{children}</TooltipProvider>
       </body>
     </html>
   );
