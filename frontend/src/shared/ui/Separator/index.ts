@@ -1,1 +1,1 @@
-export { Separator } from './ui/Separator';
+export { Separator, type SeparatorProps } from './ui/Separator';

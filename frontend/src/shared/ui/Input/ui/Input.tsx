@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { cn } from '@/shared/lib/utils';
 
-type InputProps = React.ComponentProps<'input'>;
+export type InputProps = React.ComponentProps<'input'>;
 
 export const Input = (props: InputProps) => {
   const { className, type, ...rest } = props;
