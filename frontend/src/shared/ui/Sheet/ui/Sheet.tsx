@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Dialog as SheetPrimitive } from 'radix-ui';
 import { SheetClose } from './SheetClose';
 import { SheetContent } from './SheetContent';
-import { SheetDescription } from '@/shared/ui/Sheet';
+import { SheetDescription } from './SheetDescription';
 import { SheetFooter } from './SheetFooter';
 import { SheetHeader } from './SheetHeader';
 import { SheetOverlay } from './SheetOverlay';
