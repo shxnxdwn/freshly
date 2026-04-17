@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils/cn';
 import { TableBody } from './TableBody';
 import { TableCell } from './TableCell';
 import { TableFooter } from './TableFooter';

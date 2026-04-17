@@ -7,7 +7,7 @@ import {
   SIDEBAR_WIDTH,
   SIDEBAR_WIDTH_ICON
 } from '../model/constants';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils/cn';
 import type { SidebarContextProps } from '../ui/Sidebar';
 import { SidebarContext } from './Sidebar';
 

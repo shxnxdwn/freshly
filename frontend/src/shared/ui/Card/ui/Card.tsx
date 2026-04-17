@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils/cn';
 import { CardAction } from '@/shared/ui/Card/ui/CardAction';
 import { CardContent } from '@/shared/ui/Card/ui/CardContent';
 import { CardDescription } from '@/shared/ui/Card/ui/CardDescription';

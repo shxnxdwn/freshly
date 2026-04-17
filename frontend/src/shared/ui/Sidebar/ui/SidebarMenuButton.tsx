@@ -2,7 +2,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import * as React from 'react';
 import { Slot } from 'radix-ui';
 import { useSidebar } from '@/shared/ui/Sidebar/model/hooks/useSidebar';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils/cn';
 import { TooltipContent } from '@/shared/ui/Tooltip/ui/TooltipContent';
 import { Tooltip } from '@/shared/ui/Tooltip';
 import { TooltipTrigger } from '@/shared/ui/Tooltip/ui/TooltipTrigger';

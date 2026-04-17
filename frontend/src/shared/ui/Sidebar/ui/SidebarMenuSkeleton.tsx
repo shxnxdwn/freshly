@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils/cn';
 import { Skeleton } from '@/shared/ui/Skeleton';
 
 export type SidebarMenuSkeletonProps = React.ComponentProps<'div'> & {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Slot } from 'radix-ui';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils/cn';
 
 export type SidebarGroupLabelProps = React.ComponentProps<'div'> & { asChild?: boolean };
 

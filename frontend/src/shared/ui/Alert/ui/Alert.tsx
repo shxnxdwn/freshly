@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils/cn';
 import { AlertAction } from './AlertAction';
 import { AlertDescription } from './AlertDescription';
 import { AlertTitle } from './AlertTitle';

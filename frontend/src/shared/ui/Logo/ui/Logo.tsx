@@ -2,7 +2,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { Slot } from 'radix-ui';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils/cn';
 
 export const logoVariants = cva(
   'inline-flex items-center gap-2 font-bold tracking-tighter transition-colors select-none',

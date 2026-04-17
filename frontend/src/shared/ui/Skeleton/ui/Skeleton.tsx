@@ -1,4 +1,4 @@
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils/cn';
 import * as React from 'react';
 
 export type SkeletonProps = React.ComponentProps<'div'>;

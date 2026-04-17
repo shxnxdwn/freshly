@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Slot } from 'radix-ui';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils/cn';
 
 export type SidebarMenuActionProps = React.ComponentProps<'button'> & {
   asChild?: boolean;

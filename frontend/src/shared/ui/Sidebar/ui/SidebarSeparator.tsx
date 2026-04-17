@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils/cn';
 import { Separator } from '@/shared/ui/Separator';
 
 export type SidebarSeparatorProps = React.ComponentProps<typeof Separator>;

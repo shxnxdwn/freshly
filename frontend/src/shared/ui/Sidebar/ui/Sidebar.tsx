@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useSidebar } from '../model/hooks/useSidebar';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils/cn';
 import { Sheet } from '@/shared/ui/Sheet';
 import { SIDEBAR_WIDTH_MOBILE } from '@/shared/ui/Sidebar/model/constants';
 import { SidebarContent } from '@/shared/ui/Sidebar/ui/SidebarContent';

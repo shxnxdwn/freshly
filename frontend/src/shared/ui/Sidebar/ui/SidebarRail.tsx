@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useSidebar } from '@/shared/ui/Sidebar/model/hooks/useSidebar';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils/cn';
 
 export type SidebarRailProps = React.ComponentProps<'button'>;
 

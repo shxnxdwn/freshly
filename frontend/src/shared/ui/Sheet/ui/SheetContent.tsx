@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Dialog as SheetPrimitive } from 'radix-ui';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils/cn';
 import { Button } from '@/shared/ui/Button';
 import { XIcon } from 'lucide-react';
 import { SheetPortal } from './SheetPortal';
