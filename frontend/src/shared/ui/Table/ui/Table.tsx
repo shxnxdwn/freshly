@@ -11,7 +11,7 @@ import { TableRow } from './TableRow';
 
 export type TableProps = React.ComponentProps<'table'>;
 
-export const Table = (props: TableProps) => {
+export const TableRoot = (props: TableProps) => {
   const { className, ...rest } = props;
 
   return (
@@ -21,7 +21,7 @@ export const Table = (props: TableProps) => {
   );
 };
 
-Object.assign(Table, {
+export const Table = Object.assign(TableRoot, {
   Body: TableBody,
   Cell: TableCell,
   Footer: TableFooter,

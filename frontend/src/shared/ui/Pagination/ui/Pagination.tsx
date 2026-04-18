@@ -9,7 +9,7 @@ import { PaginationNext } from './PaginationNext';
 
 export type PaginationProps = React.ComponentProps<'nav'>;
 
-export const Pagination = (props: PaginationProps) => {
+export const PaginationRoot = (props: PaginationProps) => {
   const { className, ...rest } = props;
 
   return (
@@ -23,7 +23,7 @@ export const Pagination = (props: PaginationProps) => {
   );
 };
 
-Object.assign(Pagination, {
+export const Pagination = Object.assign(PaginationRoot, {
   Content: PaginationContent,
   Ellipsis: PaginationEllipsis,
   Item: PaginationItem,

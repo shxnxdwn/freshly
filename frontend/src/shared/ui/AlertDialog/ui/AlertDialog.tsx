@@ -12,11 +12,11 @@ import { AlertDialogAction } from './AlertDialogAction';
 
 export type AlertDialogProps = React.ComponentProps<typeof AlertDialogPrimitive.Root>;
 
-export const AlertDialog = (props: AlertDialogProps) => {
+export const AlertDialogRoot = (props: AlertDialogProps) => {
   return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />;
 };
 
-Object.assign(AlertDialog, {
+export const AlertDialog = Object.assign(AlertDialogRoot, {
   Trigger: AlertDialogTrigger,
   Content: AlertDialogContent,
   Header: AlertDialogHeader,

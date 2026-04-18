@@ -14,11 +14,11 @@ import { SelectScrollDownButton } from './SelectScrollDownButton';
 
 export type SelectProps = React.ComponentProps<typeof SelectPrimitive.Root>;
 
-export const Select = (props: SelectProps) => {
+export const SelectRoot = (props: SelectProps) => {
   return <SelectPrimitive.Root data-slot="select" {...props} />;
 };
 
-Object.assign(Select, {
+export const Select = Object.assign(SelectRoot, {
   Group: SelectGroup,
   Value: SelectValue,
   Trigger: SelectTrigger,
