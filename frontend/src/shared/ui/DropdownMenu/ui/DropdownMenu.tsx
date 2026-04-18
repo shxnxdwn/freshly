@@ -19,11 +19,11 @@ import { DropdownMenuSubContent } from './DropdownMenuSubContent';
 
 export type DropdownMenuProps = React.ComponentProps<typeof DropdownMenuPrimitive.Root>;
 
-export const DropdownMenuRoot = ({ ...props }: DropdownMenuProps) => {
+export const DropdownMenu = ({ ...props }: DropdownMenuProps) => {
   return <DropdownMenuPrimitive.Root data-slot="dropdown-menu" {...props} />;
 };
 
-export const DropdownMenu = Object.assign(DropdownMenuRoot, {
+Object.assign(DropdownMenu, {
   CheckboxItem: DropdownMenuCheckboxItem,
   Portal: DropdownMenuPortal,
   Trigger: DropdownMenuTrigger,

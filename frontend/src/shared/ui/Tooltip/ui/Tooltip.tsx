@@ -8,11 +8,11 @@ import { TooltipTrigger } from './TooltipTrigger';
 
 export type TooltipProps = React.ComponentProps<typeof TooltipPrimitive.Root>;
 
-export const TooltipRoot = (props: TooltipProps) => {
+export const Tooltip = (props: TooltipProps) => {
   return <TooltipPrimitive.Root data-slot="tooltip" {...props} />;
 };
 
-export const Tooltip = Object.assign(TooltipRoot, {
+Object.assign(Tooltip, {
   Content: TooltipContent,
   Provider: TooltipProvider,
   Trigger: TooltipTrigger

@@ -12,11 +12,11 @@ import { SheetTrigger } from './SheetTrigger';
 
 export type SheetProps = React.ComponentProps<typeof SheetPrimitive.Root>;
 
-export const SheetRoot = (props: SheetProps) => {
+export const Sheet = (props: SheetProps) => {
   return <SheetPrimitive.Root data-slot="sheet" {...props} />;
 };
 
-export const Sheet = Object.assign(SheetRoot, {
+Object.assign(Sheet, {
   Close: SheetClose,
   Content: SheetContent,
   Description: SheetDescription,

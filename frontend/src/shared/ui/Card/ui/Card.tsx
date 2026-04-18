@@ -9,7 +9,7 @@ import { CardTitle } from '@/shared/ui/Card/ui/CardTitle';
 
 export type CardProps = React.ComponentProps<'div'> & { size?: 'default' | 'sm' };
 
-export const CardRoot = (props: CardProps) => {
+export const Card = (props: CardProps) => {
   const { className, size = 'default', ...rest } = props;
 
   return (
@@ -25,7 +25,7 @@ export const CardRoot = (props: CardProps) => {
   );
 };
 
-export const Card = Object.assign(CardRoot, {
+Object.assign(Card, {
   Action: CardAction,
   Content: CardContent,
   Description: CardDescription,

@@ -22,13 +22,13 @@ export const alertVariants = cva(
 
 export type AlertProps = React.ComponentProps<'div'> & VariantProps<typeof alertVariants>;
 
-export const AlertRoot = (props: AlertProps) => {
+export const Alert = (props: AlertProps) => {
   const { className, variant, ...rest } = props;
 
   return <div data-slot="alert" role="alert" className={cn(alertVariants({ variant }), className)} {...rest} />;
 };
 
-export const Alert = Object.assign(AlertRoot, {
+Object.assign(Alert, {
   Title: AlertTitle,
   Description: AlertDescription,
   Action: AlertAction

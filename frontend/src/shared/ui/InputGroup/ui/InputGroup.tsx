@@ -10,7 +10,7 @@ import { InputGroupTextarea } from './InputGroupTextarea';
 
 export type InputGroupProps = React.ComponentProps<'div'>;
 
-export const InputGroupRoot = (props: InputGroupProps) => {
+export const InputGroup = (props: InputGroupProps) => {
   const { className, ...rest } = props;
 
   return (
@@ -26,7 +26,7 @@ export const InputGroupRoot = (props: InputGroupProps) => {
   );
 };
 
-export const InputGroup = Object.assign(InputGroupRoot, {
+Object.assign(InputGroup, {
   Addon: InputGroupAddon,
   Button: InputGroupButton,
   Text: InputGroupText,

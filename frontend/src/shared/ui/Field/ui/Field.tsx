@@ -30,7 +30,7 @@ export const fieldVariants = cva('group/field flex w-full gap-2 data-[invalid=tr
 
 export type FieldProps = React.ComponentProps<'div'> & VariantProps<typeof fieldVariants>;
 
-export const FieldRoot = (props: FieldProps) => {
+export const Field = (props: FieldProps) => {
   const { className, orientation = 'vertical', ...rest } = props;
 
   return (
@@ -44,7 +44,7 @@ export const FieldRoot = (props: FieldProps) => {
   );
 };
 
-export const Field = Object.assign(FieldRoot, {
+Object.assign(Field, {
   Label: FieldLabel,
   Description: FieldDescription,
   Error: FieldError,
