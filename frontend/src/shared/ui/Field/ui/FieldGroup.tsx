@@ -3,7 +3,7 @@ import { cn } from '@/shared/lib/utils/cn';
 
 export type FieldGroupProps = React.ComponentProps<'div'>;
 
-export const FieldGroup = (props: React.ComponentProps<'div'>) => {
+export const FieldGroup = (props: FieldGroupProps) => {
   const { className, ...rest } = props;
 
   return (
