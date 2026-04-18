@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { useSidebar } from '../model/hooks/useSidebar';
 import { cn } from '@/shared/lib/utils/cn';
