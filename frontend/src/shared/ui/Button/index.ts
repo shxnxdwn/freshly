@@ -1,1 +1,1 @@
-export { Button, type ButtonProps } from './ui/Button';
+export { Button, type ButtonProps, buttonVariants } from './ui/Button';
