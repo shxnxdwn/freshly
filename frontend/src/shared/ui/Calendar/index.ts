@@ -1,1 +1,1 @@
-export { Calendar } from './ui/Calendar';
+export { Calendar, type CalendarProps } from './ui/Calendar';
