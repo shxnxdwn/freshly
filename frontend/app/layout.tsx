@@ -19,11 +19,9 @@ export const metadata: Metadata = {
   description: 'Интернет магазин на Next.js'
 };
 
-export default function RootLayout({
-  children
-}: Readonly<{
-  children: ReactNode;
-}>) {
+export type RootLayoutProps = Readonly<{ children: ReactNode }>;
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="ru">
       <body className={`${interSans.variable} ${geistMono.variable} antialiased`}>
