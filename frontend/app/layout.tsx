@@ -1,12 +1,12 @@
+import * as React from 'react';
 import type { Metadata } from 'next';
 import { Geist_Mono, Inter } from 'next/font/google';
-import '@/app/globals.css';
-import type { ReactNode } from 'react';
-import { TooltipProvider } from '@/shared/ui/Tooltip/ui/TooltipProvider';
+import '@/app/styles/globals.css';
+import Providers from '@/app/Providers';
 
 const interSans = Inter({
   variable: '--font-inter-sans',
-  subsets: ['latin']
+  subsets: ['latin', 'cyrillic']
 });
 
 const geistMono = Geist_Mono({
@@ -19,13 +19,13 @@ export const metadata: Metadata = {
   description: 'Интернет магазин на Next.js'
 };
 
-export type RootLayoutProps = Readonly<{ children: ReactNode }>;
+export type RootLayoutProps = Readonly<{ children: React.ReactNode }>;
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="ru">
       <body className={`${interSans.variable} ${geistMono.variable} antialiased`}>
-        <TooltipProvider>{children}</TooltipProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
