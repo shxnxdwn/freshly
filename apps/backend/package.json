@@ -1,5 +1,5 @@
 {
-  "name": "freshly-backend",
+  "name": "@freshly/backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,6 +11,8 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "fastify": "^5.8.5"
+    "@ts-rest/fastify": "^3.52.1",
+    "fastify": "^5.8.5",
+    "prisma": "^6.19.3"
   }
 }
