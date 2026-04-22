@@ -7,6 +7,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "homepage": "https://github.com/shxnxdwn/freshly#readme",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/shxnxdwn/freshly/issues"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shxnxdwn/freshly.git"
@@ -15,14 +23,13 @@
     "apps/*",
     "packages/*"
   ],
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/shxnxdwn/freshly/issues"
+  "overrides": {
+    "fastify": "5.8.5",
+    "@ts-rest/react-query": {
+      "react": "$react",
+      "zod": "$zod"
+    }
   },
-  "homepage": "https://github.com/shxnxdwn/freshly#readme",
   "optionalDependencies": {
     "@next/swc-linux-x64-gnu": "^16.2.4",
     "@next/swc-linux-x64-musl": "^16.2.4",
