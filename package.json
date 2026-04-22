@@ -1,0 +1,26 @@
+{
+  "name": "freshly",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Пет-проект: интернет магазин",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shxnxdwn/freshly.git"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/shxnxdwn/freshly/issues"
+  },
+  "homepage": "https://github.com/shxnxdwn/freshly#readme"
+}
