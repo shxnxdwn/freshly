@@ -22,5 +22,10 @@
   "bugs": {
     "url": "https://github.com/shxnxdwn/freshly/issues"
   },
-  "homepage": "https://github.com/shxnxdwn/freshly#readme"
+  "homepage": "https://github.com/shxnxdwn/freshly#readme",
+  "optionalDependencies": {
+    "@next/swc-linux-x64-gnu": "^16.2.4",
+    "@next/swc-linux-x64-musl": "^16.2.4",
+    "@next/swc-win32-x64-msvc": "^16.2.4"
+  }
 }
