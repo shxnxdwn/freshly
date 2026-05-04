@@ -1,4 +1,4 @@
-import {z} from 'zod';
+import { z } from 'zod';
 
 export const brandedId = <T extends string>(brand: T) => z.string().uuid().brand(brand);
 
@@ -21,12 +21,14 @@ export type MessageId = z.infer<typeof MessageId>;
 export type CartItemId = z.infer<typeof CartItemId>;
 
 export const Slug = z.string().regex(/^[a-z0-9-]+$/);
+
 export const IsoDate = z.coerce.date();
 
 export const PaginationQuery = z.object({
     page: z.coerce.number().int().positive().default(1),
     limit: z.coerce.number().int().min(1).max(100).default(20),
 });
+
 export type PaginationQuery = z.infer<typeof PaginationQuery>;
 
 export const paginatedOf = <T extends z.ZodTypeAny>(schema: T) =>
@@ -43,6 +45,7 @@ export const ApiErrorSchema = z.object({
     message: z.string(),
     details: z.unknown().optional(),
 });
+
 export type ApiError = z.infer<typeof ApiErrorSchema>;
 
 export const CommonErrors = {
