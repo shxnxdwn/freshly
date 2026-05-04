@@ -1,35 +1,33 @@
 import { z } from 'zod';
-import { contract } from "./contract";
-import { UserId, IsoDate, CommonErrors } from './common';
+import { c } from './contract';
+import { UserId, IsoDateSchema, CommonErrors } from './common';
+import { AvatarSchema } from './avatar';
 
-export const UserRole = z.enum(['admin', 'user']);
-
-export type UserRole = z.infer<typeof UserRole>;
-
-export const PredefinedAvatars = z.enum(['bear.png', 'cat.png', 'chicken.png', 'meerkat.png', 'panda.png']);
+export const UserRoleSchema = z.enum(['admin', 'user']);
+export type TUserRole = z.infer<typeof UserRoleSchema>;
 
 export const UserSchema = z.object({
     id: UserId,
     email: z.string().email(),
     name: z.string().min(1).max(15),
-    avatar: PredefinedAvatars.default('cat.png'),
-    roles: z.array(UserRole).default(['user']),
-    createdAt: IsoDate,
+    avatar: AvatarSchema.default('cat.png'),
+    roles: z.array(UserRoleSchema).default(['user']),
+    createdAt: IsoDateSchema,
 });
 
-export type User = z.infer<typeof UserSchema>;
+export type TUser = z.infer<typeof UserSchema>;
 
-export const UpdateProfileBody = UserSchema.pick({
+export const UpdateProfileBodySchema = UserSchema.pick({
     name: true,
-    avatar: true
+    avatar: true,
 }).partial();
 
-export type UpdateProfileBody = z.infer<typeof UpdateProfileBody>;
+export type TUpdateProfileBody = z.infer<typeof UpdateProfileBodySchema>;
 
-export const userContract = contract.router({
+export const userContract = c.router({
     getProfile: {
         method: 'GET',
-        path: 'user/profile',
+        path: '/user/profile',
         responses: {
             200: UserSchema,
             ...CommonErrors,
@@ -38,8 +36,8 @@ export const userContract = contract.router({
     },
     updateProfile: {
         method: 'PATCH',
-        path: 'user/profile',
-        body: UpdateProfileBody,
+        path: '/user/profile',
+        body: UpdateProfileBodySchema,
         responses: {
             200: UserSchema,
             ...CommonErrors,
