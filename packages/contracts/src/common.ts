@@ -23,9 +23,9 @@ export type TReviewId = z.infer<typeof ReviewId>;
 export const MessageId = brandedId('MessageId');
 export type TMessageId = z.infer<typeof MessageId>;
 
-export const Slug = z.string().regex(/^[a-z0-9-]+$/);
+export const SlugSchema = z.string().regex(/^[a-z0-9-]+$/);
 
-export const IsoDate = z.coerce.date();
+export const IsoDateSchema = z.coerce.date();
 
 export const PaginationQuerySchema = z.object({
     page: z.coerce.number().int().positive().default(1),
