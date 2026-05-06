@@ -25,7 +25,7 @@ export type TMessageId = z.infer<typeof MessageId>;
 
 export const SlugSchema = z.string().regex(/^[a-z0-9-]+$/);
 
-export const IsoDateSchema = z.coerce.date();
+export const DateTimeSchema = z.string().datetime();
 
 export const PaginationQuerySchema = z.object({
     page: z.coerce.number().int().positive().default(1),
