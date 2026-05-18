@@ -23,13 +23,18 @@ export type TReviewId = z.infer<typeof ReviewId>;
 export const MessageId = brandedId('MessageId');
 export type TMessageId = z.infer<typeof MessageId>;
 
-export const SlugSchema = z.string().regex(/^[a-z0-9-]+$/);
 
-export const DateTimeSchema = z.string().datetime();
+export const SlugSchema = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, {
+    message: 'Slug must be lowercase alphanumeric with hyphens (no leading/trailing/consecutive hyphens)',
+});
+
+
+export const DateTimeSchema = z.string().datetime({offset: true});
+
 
 export const PaginationQuerySchema = z.object({
     page: z.coerce.number().int().positive().default(1),
-    limit: z.coerce.number().int().min(1).default(20),
+    limit: z.coerce.number().int().min(1).max(100).default(20)
 });
 
 export type TPaginationQuery = z.infer<typeof PaginationQuerySchema>;
@@ -41,7 +46,18 @@ export const paginatedOf = <T extends z.ZodTypeAny>(schema: T) =>
         page: z.number().int().positive(),
         limit: z.number().int().positive(),
         hasNext: z.boolean(),
+        hasPrev: z.boolean(),
     });
+
+export type TPaginated<T> = {
+    items: T[];
+    total: number;
+    page: number;
+    limit: number;
+    hasNext: boolean;
+    hasPrev: boolean;
+};
+
 
 export const ApiErrorSchema = z.object({
     code: z.string(),
