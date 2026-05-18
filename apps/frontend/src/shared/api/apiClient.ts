@@ -2,13 +2,13 @@ import { initClient, type ApiFetcherArgs, tsRestFetchApi } from '@ts-rest/core';
 import { Contract } from '@freshly/contracts';
 import { ApiError } from '@/shared/api/ApiError';
 
-type ApiResponse<TSuccess, TError> =
+export type ApiResponse<TSuccess, TError> =
   | { status: 200 | 201 | 204; body: TSuccess }
   | { status: Exclude<number, 200 | 201 | 204>; body: TError };
 
-const isSuccessStatus = (status: number) => status >= 200 && status < 300;
+export const isSuccessStatus = (status: number) => status >= 200 && status < 300;
 
-const apiFetcher = async (args: ApiFetcherArgs) => {
+export const apiFetcher = async (args: ApiFetcherArgs) => {
   try {
     return await tsRestFetchApi({
       ...args,
