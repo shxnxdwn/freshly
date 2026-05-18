@@ -6,7 +6,7 @@ export const HTTP_ERROR = {
   NOT_FOUND: 404,
   UNPROCESSABLE_ENTITY: 422,
   TOO_MANY_REQUESTS: 429,
-  SERVER_ERROR_FLOOR: 500
+  SERVER_ERROR: 500
 } as const;
 
 export class ApiError extends Error {
@@ -78,11 +78,15 @@ export class ApiError extends Error {
   }
 
   get isClientError(): boolean {
-    return this.status >= 400 && this.status < HTTP_ERROR.SERVER_ERROR_FLOOR;
+    return this.status >= 400 && this.status < HTTP_ERROR.SERVER_ERROR;
+  }
+
+  get isLocalError(): boolean {
+    return this.status < 0;
   }
 
   get isServerError(): boolean {
-    return this.status >= HTTP_ERROR.SERVER_ERROR_FLOOR;
+    return this.status >= HTTP_ERROR.SERVER_ERROR;
   }
 
   get isNetworkError(): boolean {
