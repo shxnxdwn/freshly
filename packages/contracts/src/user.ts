@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { c } from './contract';
-import { UserId, IsoDateSchema, CommonErrors } from './common';
+import { UserId, DateTimeSchema, CommonErrors } from './common';
 import { AvatarSchema } from './avatar';
 
 export const UserRoleSchema = z.enum(['admin', 'user']);
@@ -12,7 +12,7 @@ export const UserSchema = z.object({
     name: z.string().min(1).max(15),
     avatar: AvatarSchema.default('cat.png'),
     roles: z.array(UserRoleSchema).default(['user']),
-    createdAt: IsoDateSchema,
+    createdAt: DateTimeSchema,
 });
 
 export type TUser = z.infer<typeof UserSchema>;
