@@ -1,20 +1,20 @@
 import type { TApiError } from '@freshly/contracts';
 
-export const HTTP_ERROR = {
-  UNAUTHORIZED: 401,
-  FORBIDDEN: 403,
-  NOT_FOUND: 404,
-  UNPROCESSABLE_ENTITY: 422,
-  TOO_MANY_REQUESTS: 429,
-  SERVER_ERROR: 500
-} as const;
-
 export class ApiError extends Error {
   public readonly status: number;
   public readonly body: unknown;
   public readonly isApiError = true as const;
   public readonly code?: string;
   public readonly details?: unknown;
+
+  public static readonly STATUS = {
+    UNAUTHORIZED: 401,
+    FORBIDDEN: 403,
+    NOT_FOUND: 404,
+    UNPROCESSABLE_ENTITY: 422,
+    TOO_MANY_REQUESTS: 429,
+    SERVER_ERROR: 500
+  } as const;
 
   constructor(status: number, body: unknown) {
     super(ApiError.extractMessage(body));
@@ -58,27 +58,27 @@ export class ApiError extends Error {
   }
 
   get isUnauthorized(): boolean {
-    return this.status === HTTP_ERROR.UNAUTHORIZED;
+    return this.status === ApiError.STATUS.UNAUTHORIZED;
   }
 
   get isForbidden(): boolean {
-    return this.status === HTTP_ERROR.FORBIDDEN;
+    return this.status === ApiError.STATUS.FORBIDDEN;
   }
 
   get isNotFound(): boolean {
-    return this.status === HTTP_ERROR.NOT_FOUND;
+    return this.status === ApiError.STATUS.NOT_FOUND;
   }
 
   get isValidationError(): boolean {
-    return this.status === HTTP_ERROR.UNPROCESSABLE_ENTITY;
+    return this.status === ApiError.STATUS.UNPROCESSABLE_ENTITY;
   }
 
   get isTooManyRequests(): boolean {
-    return this.status === HTTP_ERROR.TOO_MANY_REQUESTS;
+    return this.status === ApiError.STATUS.TOO_MANY_REQUESTS;
   }
 
   get isClientError(): boolean {
-    return this.status >= 400 && this.status < HTTP_ERROR.SERVER_ERROR;
+    return this.status >= 400 && this.status < ApiError.STATUS.SERVER_ERROR;
   }
 
   get isLocalError(): boolean {
@@ -86,7 +86,7 @@ export class ApiError extends Error {
   }
 
   get isServerError(): boolean {
-    return this.status >= HTTP_ERROR.SERVER_ERROR;
+    return this.status >= ApiError.STATUS.SERVER_ERROR;
   }
 
   get isNetworkError(): boolean {
