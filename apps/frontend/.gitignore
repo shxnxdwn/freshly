@@ -84,3 +84,6 @@ Desktop.ini
 # --- DEBUG ---
 core
 .node_repl_history
+
+# --- SENTRY ---
+.env.sentry-build-plugin
