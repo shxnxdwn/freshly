@@ -1,4 +1,8 @@
 {
+  "Metadata": {
+    "title": "Freshly",
+    "description": "Internet shop on Next.js"
+  },
   "Errors": {
     "unknown": { "title": "Something went wrong", "message": "We hit a glitch. Please try again in a moment." },
     "network": { "title": "Connection lost", "message": "Please check your internet and try again." },
