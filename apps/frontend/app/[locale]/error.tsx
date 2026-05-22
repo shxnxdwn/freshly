@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import {
@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { ApiError } from '@/shared/api/ApiError';
 import { Button } from '@/shared/ui/Button';
+import { Card } from '@/shared/ui/Card';
 
 type ErrorVariant =
   | 'network'
@@ -66,22 +67,12 @@ function resolveVariant(error: Error): ErrorVariant {
 
 export default function ErrorPage({ error, reset }: ErrorPageProps) {
   const t = useTranslations('Errors');
-
   const variant = resolveVariant(error);
   const Icon = VARIANT_ICON[variant];
 
-  useEffect(() => {
-    console.error('[ErrorBoundary]', {
-      variant,
-      digest: error.digest,
-      message: error.message,
-      ...(ApiError.isApiError(error) ? (error as ApiError).toJSON() : {})
-    });
-  }, [error, variant]);
-
   return (
     <main className="flex min-h-dvh items-center justify-center p-6">
-      <div className="flex w-full max-w-sm flex-col items-center gap-4 text-center">
+      <Card className="flex w-full max-w-sm flex-col items-center gap-4 p-8 text-center">
         <div className="bg-muted flex size-14 items-center justify-center rounded-2xl border">
           <Icon className="text-muted-foreground size-6" aria-hidden="true" />
         </div>
@@ -99,12 +90,14 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
         )}
 
         <div className="flex gap-2 pt-1">
-          <Button onClick={reset}>{t('actions.retry')}</Button>
+          <Button className="cursor-pointer" onClick={reset}>
+            {t('actions.retry')}
+          </Button>
           <Button variant="outline" asChild>
             <Link href="/">{t('actions.home')}</Link>
           </Button>
         </div>
-      </div>
+      </Card>
     </main>
   );
 }
