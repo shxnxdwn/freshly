@@ -5,6 +5,6 @@ const nextConfig: NextConfig = {
   reactCompiler: true
 };
 
-const withNextIntl = createNextIntlPlugin('./src/app/i18n/request.ts');
+const withNextIntl = createNextIntlPlugin('./src/shared/i18n/request.ts');
 
 export default withNextIntl(nextConfig);
