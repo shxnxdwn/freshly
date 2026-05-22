@@ -3,13 +3,19 @@
 import * as React from 'react';
 import { Sidebar } from '@/shared/ui/Sidebar';
 import { Tooltip } from '@/shared/ui/Tooltip';
-import { NextIntlClientProvider } from 'next-intl';
+import { type AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
 
-export type ProvidersProps = { children: React.ReactNode };
+export type ProvidersProps = {
+  locale: string;
+  messages: AbstractIntlMessages;
+  children: React.ReactNode;
+};
 
-export default function Providers({ children }: ProvidersProps) {
+export default function Providers(props: ProvidersProps) {
+  const { locale, messages, children } = props;
+
   return (
-    <NextIntlClientProvider>
+    <NextIntlClientProvider locale={locale} messages={messages}>
       <Sidebar.Provider>
         <Tooltip.Provider>{children}</Tooltip.Provider>
       </Sidebar.Provider>
