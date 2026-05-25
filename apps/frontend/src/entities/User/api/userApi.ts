@@ -8,7 +8,6 @@ export const userKeys = {
 
 export const userApi = {
   getProfile: async () => unwrapResponse(await apiClient.user.getProfile()),
-
   updateProfile: async (body: TUpdateProfileBody) => unwrapResponse(await apiClient.user.updateProfile({ body }))
 };
 
