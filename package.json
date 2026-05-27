@@ -2,16 +2,11 @@
   "name": "freshly",
   "private": true,
   "version": "1.0.0",
-  "description": "Пет-проект: интернет магазин",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "homepage": "https://github.com/shxnxdwn/freshly#readme",
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "description": "Pet project: e-commerce platform",
   "type": "commonjs",
+  "homepage": "https://github.com/shxnxdwn/freshly#readme",
+  "author": "https://github.com/shxnxdwn/",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/shxnxdwn/freshly/issues"
   },
@@ -23,16 +18,15 @@
     "apps/*",
     "packages/*"
   ],
-  "overrides": {
-    "fastify": "5.8.5",
-    "@ts-rest/react-query": {
-      "react": "$react",
-      "zod": "$zod"
-    }
+  "scripts": {
+    "dev": "npm run dev -w @freshly/backend & npm run dev -w @freshly/frontend",
+    "dev:backend": "npm run dev -w @freshly/backend",
+    "dev:frontend": "npm run dev -w @freshly/frontend",
+    "db:generate": "npm run db:generate -w @freshly/db",
+    "db:migrate": "npm run db:migrate -w @freshly/db",
+    "db:studio": "npm run db:studio -w @freshly/db"
   },
-  "optionalDependencies": {
-    "@next/swc-linux-x64-gnu": "^16.2.4",
-    "@next/swc-linux-x64-musl": "^16.2.4",
-    "@next/swc-win32-x64-msvc": "^16.2.4"
+  "devDependencies": {
+    "prettier": "^3.8.1"
   }
 }

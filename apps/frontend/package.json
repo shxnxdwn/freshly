@@ -6,7 +6,6 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "restart": "next build && next start",
     "clean": "rm -rf .next",
     "rebuild": "rm -rf .next && next build",
     "lint": "eslint"
@@ -37,9 +36,8 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9.39.3",
-    "eslint-config-next": "16.1.6",
+    "eslint-config-next": "^16.2.6",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
     "prettier": "^3.8.1",
