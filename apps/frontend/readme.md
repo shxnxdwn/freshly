@@ -1,3 +1,3 @@
 # Freshly
 
-Frontend часть Freshly
+Frontend for Freshly
