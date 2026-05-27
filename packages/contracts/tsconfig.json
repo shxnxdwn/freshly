@@ -10,6 +10,8 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src"],
+  "include": [
+    "../../draft/src"
+  ],
   "exclude": ["node_modules", "dist"]
 }
