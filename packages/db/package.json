@@ -13,11 +13,10 @@
   "dependencies": {
     "drizzle-orm": "^0.45.2",
     "drizzle-zod": "^0.7.0",
-    "pg": "^8.16.0",
+    "postgres": "^3.4.9",
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@types/pg": "^8.11.0",
     "dotenv": "^16.0.0",
     "drizzle-kit": "^0.31.0",
     "typescript": "^5"
