@@ -1,4 +1,4 @@
-import { pgTable, serial, uuid, integer, varchar, timestamp, index, check } from 'drizzle-orm/pg-core';
+import { pgTable, serial, uuid, integer, varchar, timestamp, index, check, uniqueIndex } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 import { users } from './users';
 import { products } from './products';
@@ -15,11 +15,18 @@ export const reviews = pgTable(
       .notNull(),
     rating: integer('rating').notNull(),
     comment: varchar('comment', { length: 300 }),
-    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull()
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+
+    // ИЗМЕНЕНИЕ: Добавили отслеживание редактирования отзыва
+    updatedAt: timestamp('updated_at', { withTimezone: true })
+      .defaultNow()
+      .$onUpdate(() => sql`now()`)
+      .notNull()
   },
   (table) => [
     index('reviews_product_idx').on(table.productId),
     index('reviews_user_idx').on(table.userId),
-    check('rating_range', sql`${table.rating} >= 1 AND ${table.rating} <= 5`)
+    check('rating_range', sql`${table.rating} >= 1 AND ${table.rating} <= 5`),
+    uniqueIndex('reviews_user_product_uniq_idx').on(table.userId, table.productId)
   ]
 );
