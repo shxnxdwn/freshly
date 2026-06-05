@@ -46,3 +46,6 @@ export const products = pgTable(
     uniqueIndex('products_sku_unique_idx').on(table.sku)
   ]
 );
+
+export type TSelectProduct = typeof products.$inferSelect;
+export type TInsertProduct = typeof products.$inferInsert;
