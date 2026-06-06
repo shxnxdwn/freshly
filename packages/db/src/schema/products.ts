@@ -29,7 +29,7 @@ export const products = pgTable(
     salePrice: integer('sale_price'),
     stock: integer('stock').default(0).notNull(),
     imageUrls: text('image_urls').array().notNull(),
-    rating: numeric('rating', { precision: 3, scale: 2 }).default('0.00').notNull(),
+    rating: numeric('rating', { precision: 3, scale: 2 }).default('0.00').$type<number>().notNull(),
     reviewCount: integer('review_count').default(0).notNull(),
     isActive: boolean('is_active').default(true).notNull(),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
