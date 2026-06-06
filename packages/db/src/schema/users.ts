@@ -1,6 +1,8 @@
-import { pgTable, text, varchar, timestamp, uuid, uniqueIndex } from 'drizzle-orm/pg-core';
+import { pgTable, text, varchar, timestamp, uuid, uniqueIndex, pgEnum } from 'drizzle-orm/pg-core';
 import { userRoleEnum } from './enums';
 import { sql } from 'drizzle-orm';
+
+export const avatarEnum = pgEnum('avatar_enum', ['bear.png', 'cat.png', 'chicken.png', 'meerkat.png', 'panda.png']);
 
 export const users = pgTable(
   'users',
@@ -9,7 +11,7 @@ export const users = pgTable(
     name: varchar('name', { length: 100 }).notNull(),
     email: varchar('email', { length: 255 }).notNull(),
     passwordHash: text('password_hash'),
-    avatar: varchar('avatar').notNull().default('cat.png'),
+    avatar: avatarEnum('avatar').default('cat.png').notNull(),
     role: userRoleEnum('user_role').default('client').notNull(),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
     updatedAt: timestamp('updated_at', { withTimezone: true })
