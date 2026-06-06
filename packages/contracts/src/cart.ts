@@ -8,7 +8,8 @@ export const CartItemSchema = z.object({
   imageUrl: z.string().url(),
   price: z.number().int().positive(),
   salePrice: z.number().int().positive().nullable(),
-  quantity: z.number().int().positive()
+  quantity: z.number().int().positive(),
+  isUnavailable: z.boolean()
 });
 
 export type TCartItem = z.infer<typeof CartItemSchema>;
