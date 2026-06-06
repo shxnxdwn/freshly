@@ -1,0 +1,16 @@
+name: Keep Supabase Alive
+
+on:
+  schedule:
+    - cron: '0 0 */3 * *'
+  workflow_dispatch:
+
+jobs:
+  ping_db:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping PostgreSQL
+        run: |
+          sudo apt-get update && sudo apt-get install -y postgresql-client
+          psql "${{ secrets.SUPABASE_DIRECT_URL }}" -c "SELECT 1;"
+          
