@@ -8,6 +8,13 @@
       "when": 1780687587060,
       "tag": "0000_flawless_micromax",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1780756854235,
+      "tag": "0001_eager_sinister_six",
+      "breakpoints": true
     }
   ]
 }
