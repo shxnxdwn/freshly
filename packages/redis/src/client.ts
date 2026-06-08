@@ -5,7 +5,7 @@ const getRedisClient = (): Redis => {
   const url = process.env.REDIS_URL;
 
   if (!url) {
-    throw new Error('[Redis] REDIS_URL is not defined');
+    throw new Error('[Redis]: REDIS_URL is not defined');
   }
 
   const client = new Redis(url, {
@@ -15,7 +15,7 @@ const getRedisClient = (): Redis => {
   });
 
   client.on('error', (err) => {
-    console.error('[Redis] connection error:', err);
+    console.error('[Redis]: connection error:', err);
   });
 
   return client;
