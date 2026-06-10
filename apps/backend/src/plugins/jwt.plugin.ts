@@ -10,7 +10,7 @@ const jwtPayloadSchema = z.object({
   role: UserRoleSchema
 });
 
-export type JwtPayload = z.infer<typeof jwtPayloadSchema>;
+export type TJwtPayload = z.infer<typeof jwtPayloadSchema>;
 
 export const jwtPlugin = fp(async (app: FastifyInstance) => {
   await app.register(jwt, {
