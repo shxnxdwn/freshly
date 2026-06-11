@@ -1,1 +1,1 @@
-export type { TCategory } from '@freshly/contracts';
+export type { Category } from '@freshly/contracts';

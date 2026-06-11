@@ -1,1 +1,1 @@
-export type { TProduct, TProductSort, TProductsQuery } from '@freshly/contracts';
+export type { Product, ProductSort, ProductsQuery } from '@freshly/contracts';
