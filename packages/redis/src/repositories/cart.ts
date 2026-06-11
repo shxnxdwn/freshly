@@ -1,4 +1,4 @@
-import type { TCart, TCartItem } from '@freshly/contracts';
+import type { Cart, CartItem } from '@freshly/contracts';
 import { redis } from '../client.js';
 import { RedisKeys } from '../keys.js';
 
@@ -6,17 +6,17 @@ const CART_TTL_DAYS = 90;
 const CART_TTL_SECONDS = CART_TTL_DAYS * 24 * 60 * 60;
 
 export const cartRepository = {
-  async get(userId: string): Promise<TCart> {
+  async get(userId: string): Promise<Cart> {
     const raw = await redis.get(RedisKeys.cart(userId));
 
     if (!raw) {
       return { items: [], total: 0, itemCount: 0 };
     }
 
-    return JSON.parse(raw) as TCart;
+    return JSON.parse(raw) as Cart;
   },
 
-  async set(userId: string, cart: TCart): Promise<void> {
+  async set(userId: string, cart: Cart): Promise<void> {
     await redis.set(RedisKeys.cart(userId), JSON.stringify(cart), 'EX', CART_TTL_SECONDS);
   },
 
@@ -24,7 +24,7 @@ export const cartRepository = {
     await redis.del(RedisKeys.cart(userId));
   },
 
-  async addItem(userId: string, item: TCartItem): Promise<TCart> {
+  async addItem(userId: string, item: CartItem): Promise<Cart> {
     const cart = await this.get(userId);
     const exists = cart.items.some((i) => i.productId === item.productId);
 
@@ -37,7 +37,7 @@ export const cartRepository = {
     return updated;
   },
 
-  async updateItem(userId: string, productId: number, quantity: number): Promise<TCart> {
+  async updateItem(userId: string, productId: number, quantity: number): Promise<Cart> {
     if (quantity <= 0) {
       return this.removeItem(userId, productId);
     }
@@ -50,7 +50,7 @@ export const cartRepository = {
     return updated;
   },
 
-  async removeItem(userId: string, productId: number): Promise<TCart> {
+  async removeItem(userId: string, productId: number): Promise<Cart> {
     const cart = await this.get(userId);
     const updatedItems = cart.items.filter((i) => i.productId !== productId);
 
@@ -64,7 +64,7 @@ export const cartRepository = {
   }
 };
 
-const recalculate = (cart: TCart): TCart => {
+const recalculate = (cart: Cart): Cart => {
   const availableItems = cart.items.filter((i) => !i.isUnavailable);
 
   return {
