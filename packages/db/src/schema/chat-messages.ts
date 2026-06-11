@@ -24,5 +24,5 @@ export const chatMessages = pgTable(
   ]
 );
 
-export type TSelectChatMessage = typeof chatMessages.$inferSelect;
-export type TInsertChatMessage = typeof chatMessages.$inferInsert;
+export type SelectChatMessage = typeof chatMessages.$inferSelect;
+export type InsertChatMessage = typeof chatMessages.$inferInsert;

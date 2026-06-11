@@ -28,5 +28,5 @@ export const reviews = pgTable(
   ]
 );
 
-export type TSelectReview = typeof reviews.$inferSelect;
-export type TInsertReview = typeof reviews.$inferInsert;
+export type SelectReview = typeof reviews.$inferSelect;
+export type InsertReview = typeof reviews.$inferInsert;

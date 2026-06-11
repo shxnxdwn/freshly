@@ -20,5 +20,5 @@ export const orderItems = pgTable(
   (table) => [index('order_items_order_idx').on(table.orderId), index('order_items_product_idx').on(table.productId)]
 );
 
-export type TSelectOrderItem = typeof orderItems.$inferSelect;
-export type TInsertOrderItem = typeof orderItems.$inferInsert;
+export type SelectOrderItem = typeof orderItems.$inferSelect;
+export type InsertOrderItem = typeof orderItems.$inferInsert;

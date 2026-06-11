@@ -14,5 +14,5 @@ export const categories = pgTable('categories', {
     .notNull()
 });
 
-export type TSelectCategory = typeof categories.$inferSelect;
-export type TInsertCategory = typeof categories.$inferInsert;
+export type SelectCategory = typeof categories.$inferSelect;
+export type InsertCategory = typeof categories.$inferInsert;

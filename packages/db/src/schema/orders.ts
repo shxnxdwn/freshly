@@ -40,5 +40,5 @@ export const orders = pgTable(
   ]
 );
 
-export type TSelectOrder = typeof orders.$inferSelect;
-export type TInsertOrder = typeof orders.$inferInsert;
+export type SelectOrder = typeof orders.$inferSelect;
+export type InsertOrder = typeof orders.$inferInsert;

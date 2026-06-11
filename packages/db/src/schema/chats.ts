@@ -17,5 +17,5 @@ export const chats = pgTable(
   ]
 );
 
-export type TSelectChat = typeof chats.$inferSelect;
-export type TInsertChat = typeof chats.$inferInsert;
+export type SelectChat = typeof chats.$inferSelect;
+export type InsertChat = typeof chats.$inferInsert;

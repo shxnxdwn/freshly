@@ -33,5 +33,5 @@ export const addresses = pgTable(
   ]
 );
 
-export type TSelectAddress = typeof addresses.$inferSelect;
-export type TInsertAddress = typeof addresses.$inferInsert;
+export type SelectAddress = typeof addresses.$inferSelect;
+export type InsertAddress = typeof addresses.$inferInsert;

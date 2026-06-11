@@ -47,5 +47,5 @@ export const products = pgTable(
   ]
 );
 
-export type TSelectProduct = typeof products.$inferSelect;
-export type TInsertProduct = typeof products.$inferInsert;
+export type SelectProduct = typeof products.$inferSelect;
+export type InsertProduct = typeof products.$inferInsert;

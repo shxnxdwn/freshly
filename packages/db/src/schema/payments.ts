@@ -30,5 +30,5 @@ export const payments = pgTable(
   ]
 );
 
-export type TSelectPayment = typeof payments.$inferSelect;
-export type TInsertPayment = typeof payments.$inferInsert;
+export type SelectPayment = typeof payments.$inferSelect;
+export type InsertPayment = typeof payments.$inferInsert;

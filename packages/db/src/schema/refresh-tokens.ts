@@ -17,5 +17,5 @@ export const refreshTokens = pgTable(
   ]
 );
 
-export type TSelectRefreshToken = typeof refreshTokens.$inferSelect;
-export type TInsertRefreshToken = typeof refreshTokens.$inferInsert;
+export type SelectRefreshToken = typeof refreshTokens.$inferSelect;
+export type InsertRefreshToken = typeof refreshTokens.$inferInsert;
