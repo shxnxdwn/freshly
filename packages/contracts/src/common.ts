@@ -3,26 +3,25 @@ import { z } from 'zod';
 const brandedUuid = <T extends string>(brand: T) => z.string().uuid().brand(brand);
 const brandedInt = <T extends string>(brand: T) => z.number().int().positive().brand(brand);
 
-export const UserId = brandedUuid('UserId');
-export const AddressId = brandedUuid('AddressId');
-export const OrderId = brandedUuid('OrderId');
-export const MessageId = brandedUuid('MessageId');
-export const ChatId = brandedUuid('ChatId');
-export const PaymentId = brandedUuid('PaymentId');
+export const UserIdSchema = brandedUuid('UserId');
+export const AddressIdSchema = brandedUuid('AddressId');
+export const OrderIdSchema = brandedUuid('OrderId');
+export const MessageIdSchema = brandedUuid('MessageId');
+export const ChatIdSchema = brandedUuid('ChatId');
+export const PaymentIdSchema = brandedUuid('PaymentId');
+export const CategoryIdSchema = brandedInt('CategoryId');
+export const ProductIdSchema = brandedInt('ProductId');
+export const ReviewIdSchema = brandedInt('ReviewId');
 
-export const CategoryId = brandedInt('CategoryId');
-export const ProductId = brandedInt('ProductId');
-export const ReviewId = brandedInt('ReviewId');
-
-export type TUserId = z.infer<typeof UserId>;
-export type TAddressId = z.infer<typeof AddressId>;
-export type TOrderId = z.infer<typeof OrderId>;
-export type TMessageId = z.infer<typeof MessageId>;
-export type TChatId = z.infer<typeof ChatId>;
-export type TPaymentId = z.infer<typeof PaymentId>;
-export type TCategoryId = z.infer<typeof CategoryId>;
-export type TProductId = z.infer<typeof ProductId>;
-export type TReviewId = z.infer<typeof ReviewId>;
+export type UserId = z.infer<typeof UserIdSchema>;
+export type AddressId = z.infer<typeof AddressIdSchema>;
+export type OrderId = z.infer<typeof OrderIdSchema>;
+export type MessageId = z.infer<typeof MessageIdSchema>;
+export type ChatId = z.infer<typeof ChatIdSchema>;
+export type PaymentId = z.infer<typeof PaymentIdSchema>;
+export type CategoryId = z.infer<typeof CategoryIdSchema>;
+export type ProductId = z.infer<typeof ProductIdSchema>;
+export type ReviewId = z.infer<typeof ReviewIdSchema>;
 
 export const SlugSchema = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
 
@@ -33,7 +32,7 @@ export const PaginationQuerySchema = z.object({
   limit: z.coerce.number().int().min(1).max(100).default(20)
 });
 
-export type TPaginationQuery = z.infer<typeof PaginationQuerySchema>;
+export type PaginationQuery = z.infer<typeof PaginationQuerySchema>;
 
 export const paginatedOf = <T extends z.ZodTypeAny>(schema: T) =>
   z.object({
@@ -45,7 +44,7 @@ export const paginatedOf = <T extends z.ZodTypeAny>(schema: T) =>
     hasPrev: z.boolean()
   });
 
-export type TPaginated<T> = {
+export type Paginated<T> = {
   items: T[];
   total: number;
   page: number;
@@ -54,7 +53,7 @@ export type TPaginated<T> = {
   hasPrev: boolean;
 };
 
-export const GenericErrorCode = {
+export const GenericErrorCodes = {
   BAD_REQUEST: 'BAD_REQUEST',
   UNAUTHORIZED: 'UNAUTHORIZED',
   FORBIDDEN: 'FORBIDDEN',
@@ -65,7 +64,7 @@ export const GenericErrorCode = {
   INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR'
 } as const;
 
-export const DomainErrorCode = {
+export const DomainErrorCodes = {
   INVALID_CREDENTIALS: 'INVALID_CREDENTIALS',
   EMAIL_ALREADY_EXISTS: 'EMAIL_ALREADY_EXISTS',
   INVALID_REFRESH_TOKEN: 'INVALID_REFRESH_TOKEN',
@@ -75,10 +74,14 @@ export const DomainErrorCode = {
   ORDER_CANNOT_BE_CANCELLED: 'ORDER_CANNOT_BE_CANCELLED'
 } as const;
 
-export const ErrorCode = { ...GenericErrorCode, ...DomainErrorCode } as const;
-export type TErrorCode = (typeof ErrorCode)[keyof typeof ErrorCode];
+export const ErrorCodes = {
+  ...GenericErrorCodes,
+  ...DomainErrorCodes
+} as const;
 
-const errorCodeValues = Object.values(ErrorCode) as [TErrorCode, ...TErrorCode[]];
+export type ErrorCode = (typeof ErrorCodes)[keyof typeof ErrorCodes];
+
+const errorCodeValues = Object.values(ErrorCodes) as [ErrorCode, ...ErrorCode[]];
 
 export const ErrorCodeSchema = z.enum(errorCodeValues);
 
@@ -88,7 +91,7 @@ export const ApiErrorSchema = z.object({
   details: z.unknown().optional()
 });
 
-export type TApiError = z.infer<typeof ApiErrorSchema>;
+export type ApiError = z.infer<typeof ApiErrorSchema>;
 
 export const CommonErrors = {
   400: ApiErrorSchema,
