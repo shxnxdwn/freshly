@@ -14,7 +14,7 @@ import {
   Timer,
   CircleAlert
 } from 'lucide-react';
-import { ApiError } from '@/shared/api/ApiError';
+import { ApiError } from '@/shared/api/HttpError';
 import { Button } from '@/shared/ui/Button';
 import { Card } from '@/shared/ui/Card';
 

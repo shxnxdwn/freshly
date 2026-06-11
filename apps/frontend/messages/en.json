@@ -4,21 +4,48 @@
     "description": "Internet shop on Next.js"
   },
   "Errors": {
-    "unknown": { "title": "Something went wrong", "message": "We hit a glitch. Please try again in a moment." },
-    "network": { "title": "Connection lost", "message": "Please check your internet and try again." },
-    "server": { "title": "Server issues", "message": "We're having some trouble on our end, but we're on it." },
-    "notFound": { "title": "Page not found", "message": "The link might be broken, or the page was moved." },
-    "unauthorized": { "title": "Sign in required", "message": "Please log in to access this page." },
-    "forbidden": { "title": "Access denied", "message": "You don't have permission to view this content." },
-    "validation": { "title": "Check your input", "message": "Some information looks incorrect. Please review it." },
-    "rateLimit": { "title": "Slow down a bit", "message": "Please wait a moment before trying again." },
-    "client": { "title": "Bad request", "message": "The app sent invalid data. Try restarting it." },
-    "common": {
-      "digest": "Error code"
+    "BAD_REQUEST": { "title": "Bad Request", "message": "The application sent invalid data." },
+    "UNAUTHORIZED": { "title": "Authentication Required", "message": "Please log in to continue." },
+    "FORBIDDEN": { "title": "Access Denied", "message": "You do not have permission to perform this action." },
+    "NOT_FOUND": { "title": "Not Found", "message": "The requested resource or page does not exist." },
+    "CONFLICT": { "title": "Data Conflict", "message": "The data on the server has changed. Please refresh the page." },
+    "VALIDATION_ERROR": {
+      "title": "Validation Error",
+      "message": "Please check your input — some fields contain errors."
     },
-    "actions": {
-      "retry": "Try again",
-      "home": "Go home"
+    "TOO_MANY_REQUESTS": {
+      "title": "Too Many Requests",
+      "message": "You are sending too many requests. Please slow down."
+    },
+    "INTERNAL_SERVER_ERROR": {
+      "title": "Server Error",
+      "message": "An internal server error occurred. We are working on it."
+    },
+
+    "INVALID_CREDENTIALS": { "title": "Login Failed", "message": "Incorrect email or password." },
+    "EMAIL_ALREADY_EXISTS": { "title": "Registration Failed", "message": "This email is already registered." },
+    "INVALID_REFRESH_TOKEN": {
+      "title": "Session Expired",
+      "message": "Your session has expired. Please sign in again."
+    },
+    "PRODUCT_OUT_OF_STOCK": {
+      "title": "Out of Stock",
+      "message": "There is insufficient stock available for this product."
+    },
+    "CART_EMPTY": { "title": "Cart is Empty", "message": "Add items to your cart before checking out." },
+    "REVIEW_ALREADY_EXISTS": {
+      "title": "Review Already Exists",
+      "message": "You have already left a review for this product."
+    },
+    "ORDER_CANNOT_BE_CANCELLED": {
+      "title": "Cancellation Impossible",
+      "message": "The order cannot be cancelled at this stage."
+    },
+
+    "NETWORK_ERROR": { "title": "Connection Lost", "message": "Please check your network connection and try again." },
+    "UNKNOWN_ERROR": {
+      "title": "Something Went Wrong",
+      "message": "An unexpected error occurred. Please try again later."
     }
   }
 }
