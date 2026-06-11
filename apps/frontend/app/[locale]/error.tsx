@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 
 import type { ClientErrorCode } from '@/shared/api/HttpError';
-import { resolveClientErrorCode, getErrorTranslationKeys } from '@/shared/api/error-utils';
+import { resolveClientErrorCode, getErrorTranslationKeys } from '@/shared/lib/utils/error-utils';
 import { Button } from '@/shared/ui/Button';
 import { Card } from '@/shared/ui/Card';
 
