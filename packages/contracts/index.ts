@@ -9,5 +9,5 @@ export * from './src/cart';
 export * from './src/order';
 export * from './src/support';
 export * from './src/events';
-export { Contract } from './src/main';
-export type { TContract } from './src/main';
+export { contract } from './src/main';
+export type { Contract } from './src/main';

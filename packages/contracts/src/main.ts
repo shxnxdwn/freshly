@@ -9,7 +9,7 @@ import { cartContract } from './cart';
 import { orderContract } from './order';
 import { supportContract } from './support';
 
-export const Contract = c.router(
+export const contract = c.router(
   {
     auth: authContract,
     user: userContract,
@@ -24,4 +24,4 @@ export const Contract = c.router(
   { pathPrefix: '/api/v1' }
 );
 
-export type Contract = typeof Contract;
+export type Contract = typeof contract;
