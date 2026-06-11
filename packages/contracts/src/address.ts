@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import { c } from './contract';
-import { AddressId, CommonErrors } from './common';
+import { AddressIdSchema, CommonErrors } from './common';
 
 export const AddressSchema = z.object({
-  id: AddressId,
+  id: AddressIdSchema,
   label: z.string().min(1).max(50).nullable(),
   value: z.string().min(5).max(255),
   city: z.string().min(1).max(100),
@@ -21,15 +21,15 @@ export const AddressSchema = z.object({
   longitude: z.number().min(-180).max(180).nullable()
 });
 
-export type TAddress = z.infer<typeof AddressSchema>;
+export type Address = z.infer<typeof AddressSchema>;
 
 export const CreateAddressBodySchema = AddressSchema.omit({ id: true });
-export type TCreateAddressBody = z.infer<typeof CreateAddressBodySchema>;
+export type CreateAddressBody = z.infer<typeof CreateAddressBodySchema>;
 
 export const UpdateAddressBodySchema = CreateAddressBodySchema.partial();
-export type TUpdateAddressBody = z.infer<typeof UpdateAddressBodySchema>;
+export type UpdateAddressBody = z.infer<typeof UpdateAddressBodySchema>;
 
-const AddressParamsSchema = z.object({ id: AddressId });
+const AddressParamsSchema = z.object({ id: AddressIdSchema });
 
 export const addressContract = c.router({
   getAddresses: {

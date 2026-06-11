@@ -8,7 +8,7 @@ export const LoginBodySchema = z.object({
   password: z.string().min(6)
 });
 
-export type TLoginBody = z.infer<typeof LoginBodySchema>;
+export type LoginBody = z.infer<typeof LoginBodySchema>;
 
 export const RegisterBodySchema = z.object({
   email: z.string().email(),
@@ -16,7 +16,7 @@ export const RegisterBodySchema = z.object({
   name: z.string().min(1).max(100)
 });
 
-export type TRegisterBody = z.infer<typeof RegisterBodySchema>;
+export type RegisterBody = z.infer<typeof RegisterBodySchema>;
 
 export const AuthResponseSchema = z.object({
   accessToken: z.string(),
@@ -24,14 +24,14 @@ export const AuthResponseSchema = z.object({
   user: UserSchema
 });
 
-export type TAuthResponse = z.infer<typeof AuthResponseSchema>;
+export type AuthResponse = z.infer<typeof AuthResponseSchema>;
 
 export const RefreshResponseSchema = z.object({
   accessToken: z.string(),
   expiresIn: z.number().int().positive()
 });
 
-export type TRefreshResponse = z.infer<typeof RefreshResponseSchema>;
+export type RefreshResponse = z.infer<typeof RefreshResponseSchema>;
 
 export const authContract = c.router({
   register: {

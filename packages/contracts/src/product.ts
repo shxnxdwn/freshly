@@ -1,8 +1,8 @@
 import { z } from 'zod';
 import { c } from './contract';
 import {
-  ProductId,
-  CategoryId,
+  ProductIdSchema,
+  CategoryIdSchema,
   SlugSchema,
   DateTimeSchema,
   PaginationQuerySchema,
@@ -11,11 +11,11 @@ import {
 } from './common';
 
 export const ProductSortSchema = z.enum(['price_asc', 'price_desc', 'rating', 'newest']);
-export type TProductSort = z.infer<typeof ProductSortSchema>;
+export type ProductSort = z.infer<typeof ProductSortSchema>;
 
 export const ProductSchema = z.object({
-  id: ProductId,
-  categoryId: CategoryId,
+  id: ProductIdSchema,
+  categoryId: CategoryIdSchema,
   sku: z.string().max(300),
   name: z.string().min(1).max(255),
   slug: SlugSchema,
@@ -31,7 +31,7 @@ export const ProductSchema = z.object({
   createdAt: DateTimeSchema
 });
 
-export type TProduct = z.infer<typeof ProductSchema>;
+export type Product = z.infer<typeof ProductSchema>;
 
 export const ProductsQuerySchema = PaginationQuerySchema.extend({
   categorySlug: SlugSchema.optional(),
@@ -40,7 +40,7 @@ export const ProductsQuerySchema = PaginationQuerySchema.extend({
   onSale: z.coerce.boolean().optional()
 });
 
-export type TProductsQuery = z.infer<typeof ProductsQuerySchema>;
+export type ProductsQuery = z.infer<typeof ProductsQuerySchema>;
 
 export const productContract = c.router({
   getProducts: {

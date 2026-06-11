@@ -24,4 +24,4 @@ export const Contract = c.router(
   { pathPrefix: '/api/v1' }
 );
 
-export type TContract = typeof Contract;
+export type Contract = typeof Contract;

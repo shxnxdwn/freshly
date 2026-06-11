@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import { c } from './contract';
-import { ProductId, CommonErrors } from './common';
+import { ProductIdSchema, CommonErrors } from './common';
 
 export const CartItemSchema = z.object({
-  productId: ProductId,
+  productId: ProductIdSchema,
   name: z.string(),
   imageUrl: z.string().url(),
   price: z.number().int().positive(),
@@ -12,7 +12,7 @@ export const CartItemSchema = z.object({
   isUnavailable: z.boolean()
 });
 
-export type TCartItem = z.infer<typeof CartItemSchema>;
+export type CartItem = z.infer<typeof CartItemSchema>;
 
 export const CartSchema = z.object({
   items: z.array(CartItemSchema),
@@ -20,22 +20,22 @@ export const CartSchema = z.object({
   itemCount: z.number().int().nonnegative()
 });
 
-export type TCart = z.infer<typeof CartSchema>;
+export type Cart = z.infer<typeof CartSchema>;
 
 export const AddCartItemBodySchema = z.object({
-  productId: ProductId,
+  productId: ProductIdSchema,
   quantity: z.number().int().positive().default(1)
 });
 
-export type TAddCartItemBody = z.infer<typeof AddCartItemBodySchema>;
+export type AddCartItemBody = z.infer<typeof AddCartItemBodySchema>;
 
 export const UpdateCartItemBodySchema = z.object({
   quantity: z.number().int().positive()
 });
 
-export type TUpdateCartItemBody = z.infer<typeof UpdateCartItemBodySchema>;
+export type UpdateCartItemBody = z.infer<typeof UpdateCartItemBodySchema>;
 
-const CartItemParamsSchema = z.object({ productId: ProductId });
+const CartItemParamsSchema = z.object({ productId: ProductIdSchema });
 
 export const cartContract = c.router({
   getCart: {

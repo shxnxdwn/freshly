@@ -1,17 +1,17 @@
 import { z } from 'zod';
 import { c } from './contract';
-import { UserId, DateTimeSchema, CommonErrors } from './common';
+import { UserIdSchema, DateTimeSchema, CommonErrors } from './common';
 
 const AVATARS = ['bear.png', 'cat.png', 'chicken.png', 'meerkat.png', 'panda.png'] as const;
 const AvatarSchema = z.enum(AVATARS);
 
-export type TAvatar = z.infer<typeof AvatarSchema>;
+export type Avatar = z.infer<typeof AvatarSchema>;
 
 export const UserRoleSchema = z.enum(['admin', 'client']);
-export type TUserRole = z.infer<typeof UserRoleSchema>;
+export type UserRole = z.infer<typeof UserRoleSchema>;
 
 export const UserSchema = z.object({
-  id: UserId,
+  id: UserIdSchema,
   email: z.string().email(),
   name: z.string().min(1).max(100),
   avatar: AvatarSchema,
@@ -19,14 +19,14 @@ export const UserSchema = z.object({
   createdAt: DateTimeSchema
 });
 
-export type TUser = z.infer<typeof UserSchema>;
+export type User = z.infer<typeof UserSchema>;
 
 export const UpdateProfileBodySchema = z.object({
   name: z.string().min(1).max(100).optional(),
   avatar: AvatarSchema.optional()
 });
 
-export type TUpdateProfileBody = z.infer<typeof UpdateProfileBodySchema>;
+export type UpdateProfileBody = z.infer<typeof UpdateProfileBodySchema>;
 
 export const userContract = c.router({
   getProfile: {

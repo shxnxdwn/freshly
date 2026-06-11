@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { OrderId, ChatId, DateTimeSchema } from './common';
+import { OrderIdSchema, ChatIdSchema, DateTimeSchema } from './common';
 import { OrderStatusSchema, PaymentStatusSchema } from './order';
 import { MessageSchema } from './support';
 
@@ -17,33 +17,33 @@ export const WsServerEvent = {
 } as const;
 
 export const WsSubscribeOrderSchema = z.object({
-  orderId: OrderId
+  orderId: OrderIdSchema
 });
 
-export type TWsSubscribeOrder = z.infer<typeof WsSubscribeOrderSchema>;
+export type WsSubscribeOrder = z.infer<typeof WsSubscribeOrderSchema>;
 
 export const WsJoinChatSchema = z.object({
-  chatId: ChatId
+  chatId: ChatIdSchema
 });
 
-export type TWsJoinChat = z.infer<typeof WsJoinChatSchema>;
+export type WsJoinChat = z.infer<typeof WsJoinChatSchema>;
 
 export const WsOrderUpdatedSchema = z.object({
-  orderId: OrderId,
+  orderId: OrderIdSchema,
   status: OrderStatusSchema,
   paymentStatus: PaymentStatusSchema,
   estimatedDeliveryAt: DateTimeSchema.nullable(),
   updatedAt: DateTimeSchema
 });
 
-export type TWsOrderUpdated = z.infer<typeof WsOrderUpdatedSchema>;
+export type WsOrderUpdated = z.infer<typeof WsOrderUpdatedSchema>;
 
 export const WsChatMessageReceivedSchema = MessageSchema;
-export type TWsChatMessageReceived = z.infer<typeof WsChatMessageReceivedSchema>;
+export type WsChatMessageReceived = z.infer<typeof WsChatMessageReceivedSchema>;
 
 export const WsErrorSchema = z.object({
   code: z.string(),
   message: z.string()
 });
 
-export type TWsError = z.infer<typeof WsErrorSchema>;
+export type WsError = z.infer<typeof WsErrorSchema>;

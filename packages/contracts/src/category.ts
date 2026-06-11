@@ -1,16 +1,16 @@
 import { z } from 'zod';
 import { c } from './contract';
-import { CategoryId, SlugSchema, CommonErrors } from './common';
+import { CategoryIdSchema, SlugSchema, CommonErrors } from './common';
 
 export const CategorySchema = z.object({
-  id: CategoryId,
+  id: CategoryIdSchema,
   name: z.string().min(1).max(255),
   slug: SlugSchema,
   imageUrl: z.string().url().nullable(),
   isActive: z.boolean()
 });
 
-export type TCategory = z.infer<typeof CategorySchema>;
+export type Category = z.infer<typeof CategorySchema>;
 
 export const categoryContract = c.router({
   getCategories: {

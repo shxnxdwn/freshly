@@ -1,3 +1,5 @@
 import { initContract } from '@ts-rest/core';
 
-export const c = initContract();
+type ContractInstance = ReturnType<typeof initContract>;
+
+export const c: ContractInstance = initContract();

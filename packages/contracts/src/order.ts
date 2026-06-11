@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import { c } from './contract';
 import {
-  OrderId,
-  AddressId,
-  ProductId,
+  OrderIdSchema,
+  AddressIdSchema,
+  ProductIdSchema,
   DateTimeSchema,
   PaginationQuerySchema,
   paginatedOf,
@@ -12,10 +12,10 @@ import {
 import { CartSchema } from './cart';
 
 export const OrderStatusSchema = z.enum(['created', 'paid', 'assembling', 'delivering', 'delivered', 'cancelled']);
-export type TOrderStatus = z.infer<typeof OrderStatusSchema>;
+export type OrderStatus = z.infer<typeof OrderStatusSchema>;
 
 export const PaymentStatusSchema = z.enum(['pending', 'succeeded', 'failed', 'refunded']);
-export type TPaymentStatus = z.infer<typeof PaymentStatusSchema>;
+export type PaymentStatus = z.infer<typeof PaymentStatusSchema>;
 
 export const OrderAddressSchema = z.object({
   city: z.string(),
@@ -28,21 +28,21 @@ export const OrderAddressSchema = z.object({
   intercom: z.string().nullable()
 });
 
-export type TOrderAddress = z.infer<typeof OrderAddressSchema>;
+export type OrderAddress = z.infer<typeof OrderAddressSchema>;
 
 export const OrderItemSchema = z.object({
   id: z.string().uuid(),
-  productId: ProductId,
+  productId: ProductIdSchema,
   quantity: z.number().int().positive(),
   priceAtPurchase: z.number().int().positive(),
   productNameSnapshot: z.string(),
   productSkuSnapshot: z.string()
 });
 
-export type TOrderItem = z.infer<typeof OrderItemSchema>;
+export type OrderItem = z.infer<typeof OrderItemSchema>;
 
 export const OrderSchema = z.object({
-  id: OrderId,
+  id: OrderIdSchema,
   orderNumber: z.number().int().positive(),
   status: OrderStatusSchema,
   paymentStatus: PaymentStatusSchema,
@@ -56,16 +56,16 @@ export const OrderSchema = z.object({
   updatedAt: DateTimeSchema
 });
 
-export type TOrder = z.infer<typeof OrderSchema>;
+export type Order = z.infer<typeof OrderSchema>;
 
 export const CreateOrderBodySchema = z.object({
-  addressId: AddressId,
+  addressId: AddressIdSchema,
   userComment: z.string().max(500).optional()
 });
 
-export type TCreateOrderBody = z.infer<typeof CreateOrderBodySchema>;
+export type CreateOrderBody = z.infer<typeof CreateOrderBodySchema>;
 
-const OrderParamsSchema = z.object({ id: OrderId });
+const OrderParamsSchema = z.object({ id: OrderIdSchema });
 
 export const orderContract = c.router({
   getOrders: {
