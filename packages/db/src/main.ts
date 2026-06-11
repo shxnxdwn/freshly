@@ -35,7 +35,7 @@ const connectionString = process.env.DATABASE_URL!;
 const client = postgres(connectionString, { prepare: false });
 
 export const DrizzleClient = drizzle(client, { schema });
-export type TDrizzleClient = PostgresJsDatabase<typeof schema>;
+export type DrizzleClient = PostgresJsDatabase<typeof schema>;
 
 export * from './schema/enums';
 export * from './schema/users';
