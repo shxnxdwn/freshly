@@ -1,5 +1,5 @@
 import { type ApiFetcherArgs, tsRestFetchApi } from '@ts-rest/core';
-import { ApiError } from '@/shared/api/ApiError';
+import { HttpError } from '@/shared/api/HttpError';
 
 export const apiFetcher = async (args: ApiFetcherArgs) => {
   try {
@@ -11,17 +11,17 @@ export const apiFetcher = async (args: ApiFetcherArgs) => {
       }
     });
   } catch (error) {
-    if (ApiError.isApiError(error)) throw error;
+    if (HttpError.isHttpError(error)) throw error;
 
     if (error instanceof TypeError) {
-      throw new ApiError(0, {
+      throw new HttpError(0, {
         code: 'NETWORK_ERROR',
         message: 'Network Error',
         details: error.message
       });
     }
 
-    throw new ApiError(-1, {
+    throw new HttpError(-1, {
       code: 'UNKNOWN_ERROR',
       message: 'Unknown Error',
       details: error instanceof Error ? error.message : String(error)

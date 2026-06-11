@@ -1,38 +1,41 @@
-import type { TApiError } from '@freshly/contracts';
+import type { ApiError, ErrorCode } from '@freshly/contracts';
 
-export class ApiError extends Error {
+export type ClientErrorCode = ErrorCode | 'NETWORK_ERROR' | 'UNKNOWN_ERROR';
+
+export class HttpError extends Error {
   public readonly status: number;
   public readonly body: unknown;
-  public readonly isApiError = true as const;
-  public readonly code?: string;
+  public readonly isHttpError = true as const;
+  public readonly code?: ClientErrorCode;
   public readonly details?: unknown;
 
   public static readonly STATUS = {
     UNAUTHORIZED: 401,
     FORBIDDEN: 403,
     NOT_FOUND: 404,
+    CONFLICT: 409,
     UNPROCESSABLE_ENTITY: 422,
     TOO_MANY_REQUESTS: 429,
     SERVER_ERROR: 500
   } as const;
 
   constructor(status: number, body: unknown) {
-    super(ApiError.extractMessage(body));
-    this.name = 'ApiError';
+    super(HttpError.extractMessage(body));
+    this.name = 'HttpError';
     this.status = status;
     this.body = body;
 
-    if (ApiError.isContractError(body)) {
+    if (HttpError.isContractApiError(body)) {
       this.code = body.code;
       this.details = body.details;
     }
 
     if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, ApiError);
+      Error.captureStackTrace(this, HttpError);
     }
   }
 
-  private static isContractError(body: unknown): body is TApiError {
+  private static isContractApiError(body: unknown): body is ApiError {
     if (typeof body !== 'object' || body === null) return false;
     const record = body as Record<string, unknown>;
     return typeof record.code === 'string' && typeof record.message === 'string';
@@ -40,45 +43,49 @@ export class ApiError extends Error {
 
   static extractMessage(body: unknown): string {
     if (typeof body === 'string') return body;
-    if (!body) return 'API Error, no body provided';
+    if (!body) return 'HTTP Error, no body provided';
 
     if (typeof body === 'object') {
       const { message } = body as Record<string, unknown>;
       if (typeof message === 'string') return message;
     }
 
-    return 'API Error';
+    return 'HTTP Error';
   }
 
-  static isApiError(error: unknown): error is ApiError {
+  static isHttpError(error: unknown): error is HttpError {
     return (
-      error instanceof ApiError ||
-      (typeof error === 'object' && error !== null && 'isApiError' in error && (error as ApiError).isApiError)
+      error instanceof HttpError ||
+      (typeof error === 'object' && error !== null && 'isHttpError' in error && error.isHttpError === true)
     );
   }
 
   get isUnauthorized(): boolean {
-    return this.status === ApiError.STATUS.UNAUTHORIZED;
+    return this.status === HttpError.STATUS.UNAUTHORIZED;
   }
 
   get isForbidden(): boolean {
-    return this.status === ApiError.STATUS.FORBIDDEN;
+    return this.status === HttpError.STATUS.FORBIDDEN;
   }
 
   get isNotFound(): boolean {
-    return this.status === ApiError.STATUS.NOT_FOUND;
+    return this.status === HttpError.STATUS.NOT_FOUND;
+  }
+
+  get isConflict(): boolean {
+    return this.status === HttpError.STATUS.CONFLICT;
   }
 
   get isValidationError(): boolean {
-    return this.status === ApiError.STATUS.UNPROCESSABLE_ENTITY;
+    return this.status === HttpError.STATUS.UNPROCESSABLE_ENTITY;
   }
 
   get isTooManyRequests(): boolean {
-    return this.status === ApiError.STATUS.TOO_MANY_REQUESTS;
+    return this.status === HttpError.STATUS.TOO_MANY_REQUESTS;
   }
 
   get isClientError(): boolean {
-    return this.status >= 400 && this.status < ApiError.STATUS.SERVER_ERROR;
+    return this.status >= 400 && this.status < HttpError.STATUS.SERVER_ERROR;
   }
 
   get isLocalError(): boolean {
@@ -86,7 +93,7 @@ export class ApiError extends Error {
   }
 
   get isServerError(): boolean {
-    return this.status >= ApiError.STATUS.SERVER_ERROR;
+    return this.status >= HttpError.STATUS.SERVER_ERROR;
   }
 
   get isNetworkError(): boolean {
