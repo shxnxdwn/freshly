@@ -1,0 +1,88 @@
+import fp from 'fastify-plugin';
+import type { FastifyError, FastifyInstance } from 'fastify';
+import { ZodError } from 'zod';
+import { RequestValidationError } from '@ts-rest/fastify';
+import { ErrorCodes, type ErrorCode, type ApiError } from '@freshly/contracts';
+import { AppError } from '../errors/app-error';
+
+const mapFastifyStatusToCode = (statusCode: number): ErrorCode => {
+  switch (statusCode) {
+    case 400:
+      return ErrorCodes.BAD_REQUEST;
+    case 401:
+      return ErrorCodes.UNAUTHORIZED;
+    case 403:
+      return ErrorCodes.FORBIDDEN;
+    case 404:
+      return ErrorCodes.NOT_FOUND;
+    case 409:
+      return ErrorCodes.CONFLICT;
+    case 422:
+      return ErrorCodes.VALIDATION_ERROR;
+    case 429:
+      return ErrorCodes.TOO_MANY_REQUESTS;
+    default:
+      return ErrorCodes.INTERNAL_SERVER_ERROR;
+  }
+};
+
+export const errorHandlerPlugin = fp(async (app: FastifyInstance) => {
+  app.setNotFoundHandler((request, reply) => {
+    const body: ApiError = {
+      code: ErrorCodes.NOT_FOUND,
+      message: `Route ${request.method} ${request.url} not found`
+    };
+    reply.status(404).send(body);
+  });
+
+  app.setErrorHandler((error, request, reply) => {
+    request.log.error(error);
+
+    if (error instanceof AppError) {
+      return reply.status(error.statusCode).send(error.toResponse());
+    }
+
+    if (error instanceof RequestValidationError) {
+      const issues = [
+        ...(error.pathParams?.issues ?? []),
+        ...(error.headers?.issues ?? []),
+        ...(error.query?.issues ?? []),
+        ...(error.body?.issues ?? [])
+      ].map((issue) => ({
+        field: issue.path.join('.'),
+        message: issue.message
+      }));
+
+      const body: ApiError = {
+        code: ErrorCodes.VALIDATION_ERROR,
+        message: 'Invalid request parameters or body',
+        details: issues
+      };
+      return reply.status(422).send(body);
+    }
+
+    if (error instanceof ZodError) {
+      const body: ApiError = {
+        code: ErrorCodes.VALIDATION_ERROR,
+        message: 'Validation failed',
+        details: error.issues.map((issue) => ({ field: issue.path.join('.'), message: issue.message }))
+      };
+      return reply.status(422).send(body);
+    }
+
+    const fastifyError = error as FastifyError;
+    if (typeof fastifyError.statusCode === 'number') {
+      const body: ApiError = {
+        code: mapFastifyStatusToCode(fastifyError.statusCode),
+        message: fastifyError.message
+      };
+      return reply.status(fastifyError.statusCode).send(body);
+    }
+
+    const body: ApiError = {
+      code: ErrorCodes.INTERNAL_SERVER_ERROR,
+      message: 'Internal server error'
+    };
+    return reply.status(500).send(body);
+  });
+});
