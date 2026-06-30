@@ -7,7 +7,12 @@ const AvatarSchema = z.enum(AVATARS);
 
 export type Avatar = z.infer<typeof AvatarSchema>;
 
-export const UserRoleSchema = z.enum(['admin', 'client']);
+export const UserRole = {
+  ADMIN: 'admin',
+  CLIENT: 'client'
+} as const;
+
+export const UserRoleSchema = z.nativeEnum(UserRole);
 export type UserRole = z.infer<typeof UserRoleSchema>;
 
 export const UserSchema = z.object({

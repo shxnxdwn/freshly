@@ -1,9 +1,9 @@
-import type { TJwtPayload } from './jwt.plugin';
+import type { JwtPayload } from './jwt.plugin';
 
 declare module '@fastify/jwt' {
   interface FastifyJWT {
-    payload: TJwtPayload;
-    user: TJwtPayload;
+    payload: JwtPayload;
+    user: JwtPayload;
   }
 }
 
@@ -13,15 +13,8 @@ declare module 'fastify' {
     verifyRefreshJwt(): Promise<unknown>;
   }
   interface FastifyInstance {
-    authenticate: (
-      request: import('fastify').FastifyRequest,
-      reply: import('fastify').FastifyReply
-    ) => Promise<void>;
-
-    authenticateAdmin: (
-      request: import('fastify').FastifyRequest,
-      reply: import('fastify').FastifyReply
-    ) => Promise<void>;
+    authenticate: (request: FastifyRequest) => Promise<void>;
+    authenticateAdmin: (request: FastifyRequest) => Promise<void>;
   }
 }
 

@@ -1,16 +1,17 @@
 import fp from 'fastify-plugin';
 import jwt from '@fastify/jwt';
 import { z } from 'zod';
-import type { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
+import type { FastifyInstance, FastifyRequest } from 'fastify';
 import { env } from '../config/env';
-import { UserRoleSchema } from '@freshly/contracts';
+import { UserRole, UserRoleSchema } from '@freshly/contracts';
+import { ForbiddenError, UnauthorizedError } from '../errors/app-error';
 
 const jwtPayloadSchema = z.object({
   userId: z.string().uuid(),
   role: UserRoleSchema
 });
 
-export type TJwtPayload = z.infer<typeof jwtPayloadSchema>;
+export type JwtPayload = z.infer<typeof jwtPayloadSchema>;
 
 export const jwtPlugin = fp(async (app: FastifyInstance) => {
   await app.register(jwt, {
@@ -33,36 +34,29 @@ export const jwtPlugin = fp(async (app: FastifyInstance) => {
     }
   });
 
-  app.decorate('authenticate', async (request: FastifyRequest, reply: FastifyReply) => {
+  app.decorate('authenticate', async (request: FastifyRequest) => {
+    let decoded: unknown;
+
     try {
-      const decoded = await request.verifyAccessJwt();
-
-      const parsed = jwtPayloadSchema.safeParse(decoded);
-      if (!parsed.success) {
-        return reply.status(401).send({
-          code: 'UNAUTHORIZED',
-          message: 'Invalid token payload structure'
-        });
-      }
-
-      request.user = parsed.data;
+      decoded = await request.verifyAccessJwt();
     } catch {
-      return reply.status(401).send({
-        code: 'UNAUTHORIZED',
-        message: 'Invalid or expired access token'
-      });
+      throw new UnauthorizedError('Invalid or expired access token');
     }
+
+    const parsed = jwtPayloadSchema.safeParse(decoded);
+
+    if (!parsed.success) {
+      throw new UnauthorizedError('Invalid token payload structure');
+    }
+
+    request.user = parsed.data;
   });
 
-  app.decorate('authenticateAdmin', async (request: FastifyRequest, reply: FastifyReply) => {
-    await app.authenticate(request, reply);
-    if (reply.sent) return;
+  app.decorate('authenticateAdmin', async (request: FastifyRequest) => {
+    await app.authenticate(request);
 
-    if (request.user.role !== 'admin') {
-      return reply.status(403).send({
-        code: 'FORBIDDEN',
-        message: 'Admin access required'
-      });
+    if (request.user.role !== UserRole.ADMIN) {
+      throw new ForbiddenError('Admin access required');
     }
   });
 });
