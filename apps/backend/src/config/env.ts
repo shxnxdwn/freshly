@@ -21,9 +21,7 @@ const parsed = envSchema.safeParse(process.env);
 if (!parsed.success) {
   console.error('[Config]: Invalid environment variables:');
   console.error(JSON.stringify(parsed.error.flatten().fieldErrors, null, 2));
-
-  throw new Error('[Config]: Invalid environment configuration');
 }
 
 export const env = parsed.data;
-export type TEnv = z.infer<typeof envSchema>;
+export type Env = z.infer<typeof envSchema>;
