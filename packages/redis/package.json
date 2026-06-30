@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "main": "index.ts",
   "types": "index.ts",
-  "scripts": {
-    "test:redis": "tsx src/test.ts"
-  },
+  "scripts": {},
   "dependencies": {
     "@freshly/contracts": "*",
     "ioredis": "^5.6.1"
