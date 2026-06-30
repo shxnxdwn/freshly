@@ -1,14 +1,13 @@
 import { z } from 'zod';
 import { ApiErrorSchema, ChatIdSchema, DateTimeSchema, OrderIdSchema } from './common';
 import { OrderStatusSchema, PaymentStatusSchema } from './order';
-import { CreateMessageBodySchema, MessageSchema } from './chat';
+import { MessageSchema } from './chat';
 
 export const WsClientEvent = {
   SUBSCRIBE_ORDER: 'subscribe:order',
   UNSUBSCRIBE_ORDER: 'unsubscribe:order',
   JOIN_CHAT: 'join:chat',
-  LEAVE_CHAT: 'leave:chat',
-  SEND_MESSAGE: 'send:message'
+  LEAVE_CHAT: 'leave:chat'
 } as const;
 
 export const WsServerEvent = {
@@ -28,10 +27,6 @@ export const WsJoinChatSchema = z.object({
 });
 
 export type WsJoinChat = z.infer<typeof WsJoinChatSchema>;
-
-export const WsSendMessageSchema = CreateMessageBodySchema.and(z.object({ chatId: ChatIdSchema }));
-
-export type WsSendMessage = z.infer<typeof WsSendMessageSchema>;
 
 export const WsOrderUpdatedSchema = z.object({
   orderId: OrderIdSchema,
