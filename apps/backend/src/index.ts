@@ -6,7 +6,7 @@ const start = async () => {
   const app = await buildServer();
 
   try {
-    await app.listen({ port: env.PORT, host: '0.0.0.0' });
+    await app.listen({ port: env.PORT, host: env.HOST });
     console.log(`Server started on port ${env.PORT}`);
   } catch (err) {
     app.log.error(err);
