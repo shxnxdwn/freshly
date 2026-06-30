@@ -1,8 +1,8 @@
 import fp from 'fastify-plugin';
-import type { FastifyError, FastifyInstance } from 'fastify';
+import type { FastifyError, FastifyInstance, FastifyRequest } from 'fastify';
 import { ZodError } from 'zod';
 import { RequestValidationError } from '@ts-rest/fastify';
-import { ErrorCodes, type ErrorCode, type ApiError } from '@freshly/contracts';
+import { type ApiError, type ErrorCode, ErrorCodes } from '@freshly/contracts';
 import { AppError } from '../errors/app-error';
 
 const mapFastifyStatusToCode = (statusCode: number): ErrorCode => {
@@ -22,7 +22,15 @@ const mapFastifyStatusToCode = (statusCode: number): ErrorCode => {
     case 429:
       return ErrorCodes.TOO_MANY_REQUESTS;
     default:
-      return ErrorCodes.INTERNAL_SERVER_ERROR;
+      return statusCode >= 500 ? ErrorCodes.INTERNAL_SERVER_ERROR : ErrorCodes.BAD_REQUEST;
+  }
+};
+
+const logByStatus = (request: FastifyRequest, error: unknown, statusCode: number) => {
+  if (statusCode >= 500) {
+    request.log.error(error);
+  } else {
+    request.log.warn(error);
   }
 };
 
@@ -36,9 +44,8 @@ export const errorHandlerPlugin = fp(async (app: FastifyInstance) => {
   });
 
   app.setErrorHandler((error, request, reply) => {
-    request.log.error(error);
-
     if (error instanceof AppError) {
+      logByStatus(request, error, error.statusCode);
       return reply.status(error.statusCode).send(error.toResponse());
     }
 
@@ -58,6 +65,7 @@ export const errorHandlerPlugin = fp(async (app: FastifyInstance) => {
         message: 'Invalid request parameters or body',
         details: issues
       };
+      logByStatus(request, error, 422);
       return reply.status(422).send(body);
     }
 
@@ -65,8 +73,12 @@ export const errorHandlerPlugin = fp(async (app: FastifyInstance) => {
       const body: ApiError = {
         code: ErrorCodes.VALIDATION_ERROR,
         message: 'Validation failed',
-        details: error.issues.map((issue) => ({ field: issue.path.join('.'), message: issue.message }))
+        details: error.issues.map((issue) => ({
+          field: issue.path.join('.'),
+          message: issue.message
+        }))
       };
+      logByStatus(request, error, 422);
       return reply.status(422).send(body);
     }
 
@@ -76,6 +88,7 @@ export const errorHandlerPlugin = fp(async (app: FastifyInstance) => {
         code: mapFastifyStatusToCode(fastifyError.statusCode),
         message: fastifyError.message
       };
+      logByStatus(request, error, fastifyError.statusCode);
       return reply.status(fastifyError.statusCode).send(body);
     }
 
@@ -83,6 +96,7 @@ export const errorHandlerPlugin = fp(async (app: FastifyInstance) => {
       code: ErrorCodes.INTERNAL_SERVER_ERROR,
       message: 'Internal server error'
     };
+    logByStatus(request, error, 500);
     return reply.status(500).send(body);
   });
 });
