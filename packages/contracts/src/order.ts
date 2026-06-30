@@ -1,13 +1,14 @@
 import { z } from 'zod';
 import { c } from './contract';
 import {
-  OrderIdSchema,
   AddressIdSchema,
-  ProductIdSchema,
+  CommonErrors,
   DateTimeSchema,
-  PaginationQuerySchema,
+  OrderIdSchema,
+  OrderItemIdSchema,
   paginatedOf,
-  CommonErrors
+  PaginationQuerySchema,
+  ProductIdSchema
 } from './common';
 import { CartSchema } from './cart';
 
@@ -31,7 +32,7 @@ export const OrderAddressSchema = z.object({
 export type OrderAddress = z.infer<typeof OrderAddressSchema>;
 
 export const OrderItemSchema = z.object({
-  id: z.string().uuid(),
+  id: OrderItemIdSchema,
   productId: ProductIdSchema,
   quantity: z.number().int().positive(),
   priceAtPurchase: z.number().int().positive(),

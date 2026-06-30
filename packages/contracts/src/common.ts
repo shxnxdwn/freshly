@@ -6,6 +6,7 @@ const brandedInt = <T extends string>(brand: T) => z.number().int().positive().b
 export const UserIdSchema = brandedUuid('UserId');
 export const AddressIdSchema = brandedUuid('AddressId');
 export const OrderIdSchema = brandedUuid('OrderId');
+export const OrderItemIdSchema = brandedUuid('OrderItemId');
 export const MessageIdSchema = brandedUuid('MessageId');
 export const ChatIdSchema = brandedUuid('ChatId');
 export const PaymentIdSchema = brandedUuid('PaymentId');
@@ -16,6 +17,7 @@ export const ReviewIdSchema = brandedInt('ReviewId');
 export type UserId = z.infer<typeof UserIdSchema>;
 export type AddressId = z.infer<typeof AddressIdSchema>;
 export type OrderId = z.infer<typeof OrderIdSchema>;
+export type OrderItemId = z.infer<typeof OrderItemIdSchema>;
 export type MessageId = z.infer<typeof MessageIdSchema>;
 export type ChatId = z.infer<typeof ChatIdSchema>;
 export type PaymentId = z.infer<typeof PaymentIdSchema>;

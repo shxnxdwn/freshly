@@ -72,16 +72,5 @@ export const addressContract = c.router({
       ...CommonErrors
     },
     summary: 'Delete address'
-  },
-  setDefaultAddress: {
-    method: 'PATCH',
-    path: '/addresses/:id/default',
-    pathParams: AddressParamsSchema,
-    body: z.object({}),
-    responses: {
-      200: AddressSchema,
-      ...CommonErrors
-    },
-    summary: 'Set address as default'
   }
 });

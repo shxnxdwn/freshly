@@ -1,13 +1,14 @@
 import { z } from 'zod';
-import { OrderIdSchema, ChatIdSchema, DateTimeSchema } from './common';
+import { ApiErrorSchema, ChatIdSchema, DateTimeSchema, OrderIdSchema } from './common';
 import { OrderStatusSchema, PaymentStatusSchema } from './order';
-import { MessageSchema } from './support';
+import { CreateMessageBodySchema, MessageSchema } from './chat';
 
 export const WsClientEvent = {
   SUBSCRIBE_ORDER: 'subscribe:order',
   UNSUBSCRIBE_ORDER: 'unsubscribe:order',
   JOIN_CHAT: 'join:chat',
-  LEAVE_CHAT: 'leave:chat'
+  LEAVE_CHAT: 'leave:chat',
+  SEND_MESSAGE: 'send:message'
 } as const;
 
 export const WsServerEvent = {
@@ -28,6 +29,10 @@ export const WsJoinChatSchema = z.object({
 
 export type WsJoinChat = z.infer<typeof WsJoinChatSchema>;
 
+export const WsSendMessageSchema = CreateMessageBodySchema.and(z.object({ chatId: ChatIdSchema }));
+
+export type WsSendMessage = z.infer<typeof WsSendMessageSchema>;
+
 export const WsOrderUpdatedSchema = z.object({
   orderId: OrderIdSchema,
   status: OrderStatusSchema,
@@ -41,9 +46,5 @@ export type WsOrderUpdated = z.infer<typeof WsOrderUpdatedSchema>;
 export const WsChatMessageReceivedSchema = MessageSchema;
 export type WsChatMessageReceived = z.infer<typeof WsChatMessageReceivedSchema>;
 
-export const WsErrorSchema = z.object({
-  code: z.string(),
-  message: z.string()
-});
-
+export const WsErrorSchema = ApiErrorSchema;
 export type WsError = z.infer<typeof WsErrorSchema>;

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { c } from './contract';
-import { ProductIdSchema, CommonErrors } from './common';
+import { CommonErrors, ProductIdSchema } from './common';
 
 export const CartItemSchema = z.object({
   productId: ProductIdSchema,
@@ -74,7 +74,7 @@ export const cartContract = c.router({
     pathParams: CartItemParamsSchema,
     body: z.object({}),
     responses: {
-      200: CartSchema,
+      200: z.object({ success: z.literal(true) }),
       ...CommonErrors
     },
     summary: 'Remove item from cart'

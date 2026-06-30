@@ -7,7 +7,7 @@ import { reviewContract } from './review';
 import { addressContract } from './address';
 import { cartContract } from './cart';
 import { orderContract } from './order';
-import { supportContract } from './support';
+import { chatContract } from './chat';
 
 export const contract = c.router(
   {
@@ -19,7 +19,7 @@ export const contract = c.router(
     address: addressContract,
     cart: cartContract,
     order: orderContract,
-    support: supportContract
+    chat: chatContract
   },
   { pathPrefix: '/api/v1' }
 );

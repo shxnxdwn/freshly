@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { c } from './contract';
-import { UserIdSchema, DateTimeSchema, CommonErrors } from './common';
+import { CommonErrors, DateTimeSchema, UserIdSchema } from './common';
 
 const AVATARS = ['bear.png', 'cat.png', 'chicken.png', 'meerkat.png', 'panda.png'] as const;
 const AvatarSchema = z.enum(AVATARS);

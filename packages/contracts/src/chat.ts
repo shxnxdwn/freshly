@@ -2,12 +2,12 @@ import { z } from 'zod';
 import { c } from './contract';
 import {
   ChatIdSchema,
-  OrderIdSchema,
-  MessageIdSchema,
+  CommonErrors,
   DateTimeSchema,
-  PaginationQuerySchema,
+  MessageIdSchema,
+  OrderIdSchema,
   paginatedOf,
-  CommonErrors
+  PaginationQuerySchema
 } from './common';
 
 export const ChatRoleSchema = z.enum(['client', 'support']);
@@ -19,7 +19,7 @@ export const MessageSchema = z.object({
   senderType: ChatRoleSchema,
   messageText: z.string().min(1).max(2000).nullable(),
   orderId: OrderIdSchema.nullable(),
-  attachments: z.array(z.string().url()).nullable(),
+  attachmentUrl: z.string().url().nullable(),
   isRead: z.boolean(),
   createdAt: DateTimeSchema
 });
@@ -34,10 +34,22 @@ export const ChatSchema = z.object({
 
 export type Chat = z.infer<typeof ChatSchema>;
 
-export const supportContract = c.router({
+export const CreateMessageBodySchema = z
+  .object({
+    messageText: z.string().min(1).max(2000).optional(),
+    orderId: OrderIdSchema.optional(),
+    attachmentUrl: z.string().url().optional()
+  })
+  .refine((data) => data.messageText || data.attachmentUrl, {
+    message: 'Either messageText or attachmentUrl must be provided'
+  });
+
+export type CreateMessageBody = z.infer<typeof CreateMessageBodySchema>;
+
+export const chatContract = c.router({
   getChat: {
     method: 'GET',
-    path: '/support/chat',
+    path: '/chat',
     responses: {
       200: ChatSchema,
       ...CommonErrors
@@ -46,12 +58,22 @@ export const supportContract = c.router({
   },
   getMessages: {
     method: 'GET',
-    path: '/support/chat/messages',
+    path: '/chat/messages',
     query: PaginationQuerySchema,
     responses: {
       200: paginatedOf(MessageSchema),
       ...CommonErrors
     },
     summary: 'Get chat message history'
+  },
+  sendMessage: {
+    method: 'POST',
+    path: '/chat/messages',
+    body: CreateMessageBodySchema,
+    responses: {
+      201: MessageSchema,
+      ...CommonErrors
+    },
+    summary: 'Send message in chat'
   }
 });

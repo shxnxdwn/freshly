@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { c } from './contract';
-import { CategoryIdSchema, SlugSchema, CommonErrors } from './common';
+import { CategoryIdSchema, CommonErrors, SlugSchema } from './common';
 
 export const CategorySchema = z.object({
   id: CategoryIdSchema,
