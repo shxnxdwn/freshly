@@ -13,7 +13,7 @@ export const chatMessages = pgTable(
     senderType: chatRoleEnum('sender_type').notNull(),
     messageText: text('message_text'),
     orderId: uuid('order_id').references(() => orders.id, { onDelete: 'set null' }),
-    attachments: text('attachments').array(),
+    attachmentUrl: text('attachment_url'),
     isRead: boolean('is_read').default(false).notNull(),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull()
   },
