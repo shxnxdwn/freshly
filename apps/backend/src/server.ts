@@ -7,6 +7,7 @@ import { errorHandlerPlugin } from './plugins/error-handler.plugin';
 import { helmetPlugin } from './plugins/helmet.plugin';
 import { jwtPlugin } from './plugins/jwt.plugin';
 import { rateLimitPlugin } from './plugins/rate-limit.plugin';
+import { redisPlugin } from './plugins/redis.plugin';
 // import { authPlugin } from './modules/auth/auth.plugin';
 // import { userPlugin } from './modules/user/user.plugin';
 // import { cartPlugin } from './modules/cart/cart.plugin';
@@ -29,6 +30,7 @@ export const buildServer = async () => {
   await app.register(cookiePlugin);
   await app.register(jwtPlugin);
   await app.register(rateLimitPlugin);
+  await app.register(redisPlugin);
 
   // await app.register(authPlugin);
   // await app.register(userPlugin);
