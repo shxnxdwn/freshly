@@ -74,7 +74,7 @@ export const cartContract = c.router({
     pathParams: CartItemParamsSchema,
     body: z.object({}),
     responses: {
-      200: z.object({ success: z.literal(true) }),
+      200: CartSchema,
       ...CommonErrors
     },
     summary: 'Remove item from cart'
@@ -84,7 +84,7 @@ export const cartContract = c.router({
     path: '/cart',
     body: z.object({}),
     responses: {
-      200: z.object({ success: z.literal(true) }),
+      200: CartSchema,
       ...CommonErrors
     },
     summary: 'Clear cart'

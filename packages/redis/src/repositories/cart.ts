@@ -1,75 +1,39 @@
-import type { Cart, CartItem } from '@freshly/contracts';
-import { redis } from '../client.js';
-import { RedisKeys } from '../keys.js';
+import type { ProductId, UserId } from '@freshly/contracts';
+import { redis } from '../client';
+import { RedisKeys } from '../keys';
 
-const CART_TTL_DAYS = 90;
-const CART_TTL_SECONDS = CART_TTL_DAYS * 24 * 60 * 60;
+const CART_TTL_SECONDS = 60 * 60 * 24 * 365;
+
+export type CartItems = Record<ProductId, number>;
 
 export const cartRepository = {
-  async get(userId: string): Promise<Cart> {
-    const raw = await redis.get(RedisKeys.cart(userId));
+  async getItems(userId: UserId): Promise<CartItems> {
+    const key = RedisKeys.cart(userId);
+    const result = await redis.multi().hgetall(key).expire(key, CART_TTL_SECONDS).exec();
+    const raw = (result?.[0]?.[1] as Record<string, string> | null) ?? {};
 
-    if (!raw) {
-      return { items: [], total: 0, itemCount: 0 };
+    const items: CartItems = {};
+    for (const [productId, quantity] of Object.entries(raw)) {
+      items[Number(productId) as ProductId] = Number(quantity);
     }
-
-    return JSON.parse(raw) as Cart;
+    return items;
   },
 
-  async set(userId: string, cart: Cart): Promise<void> {
-    await redis.set(RedisKeys.cart(userId), JSON.stringify(cart), 'EX', CART_TTL_SECONDS);
+  async addItem(userId: UserId, productId: ProductId, quantity: number): Promise<void> {
+    const key = RedisKeys.cart(userId);
+    await redis.multi().hincrby(key, String(productId), quantity).expire(key, CART_TTL_SECONDS).exec();
   },
 
-  async clear(userId: string): Promise<void> {
+  async updateItem(userId: UserId, productId: ProductId, quantity: number): Promise<void> {
+    const key = RedisKeys.cart(userId);
+    await redis.multi().hset(key, String(productId), quantity).expire(key, CART_TTL_SECONDS).exec();
+  },
+
+  async removeItem(userId: UserId, productId: ProductId): Promise<void> {
+    await redis.hdel(RedisKeys.cart(userId), String(productId));
+  },
+
+  async clearCart(userId: UserId): Promise<void> {
     await redis.del(RedisKeys.cart(userId));
-  },
-
-  async addItem(userId: string, item: CartItem): Promise<Cart> {
-    const cart = await this.get(userId);
-    const exists = cart.items.some((i) => i.productId === item.productId);
-
-    const updatedItems = exists
-      ? cart.items.map((i) => (i.productId === item.productId ? { ...i, quantity: i.quantity + item.quantity } : i))
-      : [...cart.items, item];
-
-    const updated = recalculate({ ...cart, items: updatedItems });
-    await this.set(userId, updated);
-    return updated;
-  },
-
-  async updateItem(userId: string, productId: number, quantity: number): Promise<Cart> {
-    if (quantity <= 0) {
-      return this.removeItem(userId, productId);
-    }
-
-    const cart = await this.get(userId);
-    const updatedItems = cart.items.map((i) => (i.productId === productId ? { ...i, quantity } : i));
-
-    const updated = recalculate({ ...cart, items: updatedItems });
-    await this.set(userId, updated);
-    return updated;
-  },
-
-  async removeItem(userId: string, productId: number): Promise<Cart> {
-    const cart = await this.get(userId);
-    const updatedItems = cart.items.filter((i) => i.productId !== productId);
-
-    const updated = recalculate({ ...cart, items: updatedItems });
-    await this.set(userId, updated);
-    return updated;
-  },
-
-  async refreshTtl(userId: string): Promise<void> {
-    await redis.expire(RedisKeys.cart(userId), CART_TTL_SECONDS);
   }
-};
-
-const recalculate = (cart: Cart): Cart => {
-  const availableItems = cart.items.filter((i) => !i.isUnavailable);
-
-  return {
-    ...cart,
-    total: availableItems.reduce((sum, i) => sum + (i.salePrice ?? i.price) * i.quantity, 0),
-    itemCount: availableItems.reduce((sum, i) => sum + i.quantity, 0)
-  };
 };
