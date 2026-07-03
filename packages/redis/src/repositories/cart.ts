@@ -19,9 +19,9 @@ export const cartRepository = {
     return items;
   },
 
-  async addItem(userId: UserId, productId: ProductId, quantity: number): Promise<void> {
+  async addItem(userId: UserId, productId: ProductId): Promise<void> {
     const key = RedisKeys.cart(userId);
-    await redis.multi().hincrby(key, String(productId), quantity).expire(key, CART_TTL_SECONDS).exec();
+    await redis.multi().hset(key, String(productId), 1).expire(key, CART_TTL_SECONDS).exec();
   },
 
   async updateItem(userId: UserId, productId: ProductId, quantity: number): Promise<void> {

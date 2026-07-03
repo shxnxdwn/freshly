@@ -23,8 +23,7 @@ export const CartSchema = z.object({
 export type Cart = z.infer<typeof CartSchema>;
 
 export const AddCartItemBodySchema = z.object({
-  productId: ProductIdSchema,
-  quantity: z.number().int().positive().default(1)
+  productId: ProductIdSchema
 });
 
 export type AddCartItemBody = z.infer<typeof AddCartItemBodySchema>;
