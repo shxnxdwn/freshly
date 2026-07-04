@@ -25,7 +25,8 @@ export default [
             ':matches(ArrowFunctionExpression, FunctionExpression) > Identifier.params[name.length=1]:not([name="_"])',
           message: 'Параметры не могут содержать только одну букву (кроме "_" для неиспользуемых).'
         }
-      ]
+      ],
+
     }
   },
   prettierConfig
