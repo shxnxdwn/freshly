@@ -1,4 +1,4 @@
-import { pgTable, uuid, varchar, doublePrecision, boolean, index, uniqueIndex } from 'drizzle-orm/pg-core';
+import { boolean, doublePrecision, index, pgTable, uniqueIndex, uuid, varchar } from 'drizzle-orm/pg-core';
 import { users } from './users';
 import { sql } from 'drizzle-orm';
 

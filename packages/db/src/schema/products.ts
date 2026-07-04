@@ -1,15 +1,15 @@
 import {
+  boolean,
+  check,
+  index,
+  integer,
+  numeric,
   pgTable,
   serial,
-  varchar,
   text,
-  integer,
-  boolean,
   timestamp,
-  index,
-  numeric,
-  check,
-  uniqueIndex
+  uniqueIndex,
+  varchar
 } from 'drizzle-orm/pg-core';
 import { categories } from './categories';
 import { sql } from 'drizzle-orm';

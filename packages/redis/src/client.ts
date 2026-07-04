@@ -17,7 +17,7 @@ const getRedisClient = (): Redis => {
   });
 
   client.on('error', (err) => {
-    console.error('[Redis] Connection error:', err);
+    throw new Error(`[Redis] Connection error: ${err}`);
   });
 
   return client;

@@ -9,7 +9,6 @@ export default [
   {
     rules: {
       '@typescript-eslint/explicit-member-accessibility': ['error', { accessibility: 'explicit' }],
-      'id-length': ['error', { min: 2, exceptions: ['_'], properties: 'never' }],
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-floating-promises': 'error',
@@ -19,7 +18,15 @@ export default [
       'prefer-const': 'error',
       'no-var': 'error',
       'no-console': 'warn',
-    },
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector:
+            ':matches(ArrowFunctionExpression, FunctionExpression) > Identifier.params[name.length=1]:not([name="_"])',
+          message: 'Параметры не могут содержать только одну букву (кроме "_" для неиспользуемых).'
+        }
+      ]
+    }
   },
-  prettierConfig,
+  prettierConfig
 ];
