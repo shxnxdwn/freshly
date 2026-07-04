@@ -14,14 +14,14 @@ type MobileProviderProps = {
 export function useMobile(): boolean {
   const context = React.useContext(MobileContext);
   if (context === null) {
-    throw new Error('[Next]: useMobile must be used within MobileProvider');
+    throw new Error('[Next] useMobile must be used within MobileProvider');
   }
   return context;
 }
 
 export function MobileProvider(props: MobileProviderProps) {
   const { serverIsMobile, breakpoint, children } = props;
-  const isMobile = useIsMobile(serverIsMobile, breakpoint);
+  const isMobile = useIsMobile({ serverIsMobile, breakpoint });
 
   return <MobileContext.Provider value={isMobile}>{children}</MobileContext.Provider>;
 }

@@ -4,7 +4,13 @@ import * as React from 'react';
 
 const DEFAULT_BREAKPOINT = 768;
 
-export function useIsMobile(serverIsMobile: boolean, breakpoint: number = DEFAULT_BREAKPOINT): boolean {
+type UseIsMobileOptions = {
+  serverIsMobile?: boolean;
+  breakpoint?: number;
+};
+
+export const useIsMobile = (options?: UseIsMobileOptions): boolean => {
+  const { serverIsMobile = false, breakpoint = DEFAULT_BREAKPOINT } = options || {};
   const query = `(max-width: ${breakpoint}px)`;
 
   const subscribe = React.useCallback(
