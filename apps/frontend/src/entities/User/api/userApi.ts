@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient, unwrapResponse } from '@/shared/api/apiClient';
-import type { TUpdateProfileBody } from '@freshly/contracts';
+import type { UpdateProfileBody } from '@freshly/contracts';
 
 export const userKeys = {
   profile: ['user', 'profile'] as const
@@ -8,7 +8,7 @@ export const userKeys = {
 
 export const userApi = {
   getProfile: async () => unwrapResponse(await apiClient.user.getProfile()),
-  updateProfile: async (body: TUpdateProfileBody) => unwrapResponse(await apiClient.user.updateProfile({ body }))
+  updateProfile: async (body: UpdateProfileBody) => unwrapResponse(await apiClient.user.updateProfile({ body }))
 };
 
 export const useGetProfile = () =>
