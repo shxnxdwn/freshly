@@ -7,24 +7,22 @@
   "homepage": "https://github.com/shxnxdwn/freshly#readme",
   "author": "https://github.com/shxnxdwn/",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/shxnxdwn/freshly/issues"
-  },
+  "bugs": { "url": "https://github.com/shxnxdwn/freshly/issues" },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shxnxdwn/freshly.git"
   },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "dev": "npm run dev -w @freshly/backend & npm run dev -w @freshly/frontend",
     "dev:backend": "npm run dev -w @freshly/backend",
     "dev:frontend": "npm run dev -w @freshly/frontend",
     "db:generate": "npm run db:generate -w @freshly/db",
     "db:migrate": "npm run db:migrate -w @freshly/db",
-    "db:studio": "npm run db:studio -w @freshly/db"
+    "db:studio": "npm run db:studio -w @freshly/db",
+    "lint": "npm run lint --workspaces --if-present",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
     "prettier": "^3.8.1"

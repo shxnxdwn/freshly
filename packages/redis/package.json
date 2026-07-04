@@ -3,13 +3,19 @@
   "version": "1.0.0",
   "main": "index.ts",
   "types": "index.ts",
-  "scripts": {},
+  "scripts": {
+    "lint": "eslint"
+  },
   "dependencies": {
     "@freshly/contracts": "*",
     "ioredis": "^5.6.1"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.4",
     "dotenv": "^16.0.0",
-    "typescript": "^5"
+    "eslint": "^9.39.3",
+    "eslint-config-prettier": "^10.1.8",
+    "typescript": "^5",
+    "typescript-eslint": "^8.62.1"
   }
 }

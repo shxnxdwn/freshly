@@ -7,7 +7,8 @@
     "db:generate": "drizzle-kit generate --config=drizzle.config.ts",
     "db:migrate": "drizzle-kit migrate --config=drizzle.config.ts",
     "db:studio": "drizzle-kit studio --config=drizzle.config.ts",
-    "format": "prettier --write src"
+    "format": "prettier --write src",
+    "lint": "eslint"
   },
   "dependencies": {
     "drizzle-orm": "^0.45.2",
@@ -16,8 +17,12 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.4",
     "dotenv": "^16.0.0",
     "drizzle-kit": "^0.31.0",
-    "typescript": "^5"
+    "eslint": "^9.39.3",
+    "eslint-config-prettier": "^10.1.8",
+    "typescript": "^5",
+    "typescript-eslint": "^8.62.1"
   }
 }
