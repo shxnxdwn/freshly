@@ -1,4 +1,6 @@
-import type { JwtPayload } from './jwt.plugin';
+import 'fastify';
+import '@fastify/jwt';
+import type { JwtPayload } from '../plugins/jwt.plugin';
 
 declare module '@fastify/jwt' {
   interface FastifyJWT {
@@ -17,5 +19,3 @@ declare module 'fastify' {
     authenticateAdmin: (request: FastifyRequest) => Promise<void>;
   }
 }
-
-export {};

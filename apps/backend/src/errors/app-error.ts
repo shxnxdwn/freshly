@@ -1,4 +1,4 @@
-import { ErrorCodes, type ErrorCode, type ApiError } from '@freshly/contracts';
+import { type ApiError, type ErrorCode, ErrorCodes } from '@freshly/contracts';
 
 export abstract class AppError extends Error {
   public abstract readonly statusCode: number;
@@ -13,7 +13,7 @@ export abstract class AppError extends Error {
     Error.captureStackTrace(this, this.constructor);
   }
 
-  toResponse(): ApiError {
+  public toResponse(): ApiError {
     return {
       code: this.code,
       message: this.message,
@@ -23,50 +23,57 @@ export abstract class AppError extends Error {
 }
 
 export class BadRequestError extends AppError {
-  readonly statusCode = 400;
-  constructor(message = 'Bad request', code: ErrorCode = ErrorCodes.BAD_REQUEST, details?: unknown) {
+  public readonly statusCode = 400;
+
+  public constructor(message = 'Bad request', code: ErrorCode = ErrorCodes.BAD_REQUEST, details?: unknown) {
     super(message, code, details);
   }
 }
 
 export class UnauthorizedError extends AppError {
-  readonly statusCode = 401;
-  constructor(message = 'Unauthorized', code: ErrorCode = ErrorCodes.UNAUTHORIZED, details?: unknown) {
+  public readonly statusCode = 401;
+
+  public constructor(message = 'Unauthorized', code: ErrorCode = ErrorCodes.UNAUTHORIZED, details?: unknown) {
     super(message, code, details);
   }
 }
 
 export class ForbiddenError extends AppError {
-  readonly statusCode = 403;
-  constructor(message = 'Forbidden', code: ErrorCode = ErrorCodes.FORBIDDEN, details?: unknown) {
+  public readonly statusCode = 403;
+
+  public constructor(message = 'Forbidden', code: ErrorCode = ErrorCodes.FORBIDDEN, details?: unknown) {
     super(message, code, details);
   }
 }
 
 export class NotFoundError extends AppError {
-  readonly statusCode = 404;
-  constructor(message = 'Resource not found', code: ErrorCode = ErrorCodes.NOT_FOUND, details?: unknown) {
+  public readonly statusCode = 404;
+
+  public constructor(message = 'Resource not found', code: ErrorCode = ErrorCodes.NOT_FOUND, details?: unknown) {
     super(message, code, details);
   }
 }
 
 export class ConflictError extends AppError {
-  readonly statusCode = 409;
-  constructor(message = 'Conflict', code: ErrorCode = ErrorCodes.CONFLICT, details?: unknown) {
+  public readonly statusCode = 409;
+
+  public constructor(message = 'Conflict', code: ErrorCode = ErrorCodes.CONFLICT, details?: unknown) {
     super(message, code, details);
   }
 }
 
 export class ValidationError extends AppError {
-  readonly statusCode = 422;
-  constructor(message = 'Validation failed', code: ErrorCode = ErrorCodes.VALIDATION_ERROR, details?: unknown) {
+  public readonly statusCode = 422;
+
+  public constructor(message = 'Validation failed', code: ErrorCode = ErrorCodes.VALIDATION_ERROR, details?: unknown) {
     super(message, code, details);
   }
 }
 
 export class TooManyRequestsError extends AppError {
-  readonly statusCode = 429;
-  constructor(message = 'Too many requests', code: ErrorCode = ErrorCodes.TOO_MANY_REQUESTS, details?: unknown) {
+  public readonly statusCode = 429;
+
+  public constructor(message = 'Too many requests', code: ErrorCode = ErrorCodes.TOO_MANY_REQUESTS, details?: unknown) {
     super(message, code, details);
   }
 }
