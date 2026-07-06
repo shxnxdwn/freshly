@@ -11,8 +11,8 @@ declare module '@fastify/jwt' {
 
 declare module 'fastify' {
   interface FastifyRequest {
-    verifyAccessJwt(): Promise<unknown>;
-    verifyRefreshJwt(): Promise<unknown>;
+    verifyAccessJwt(): Promise<JwtPayload>;
+    verifyRefreshJwt(): Promise<JwtPayload>;
   }
   interface FastifyInstance {
     authenticate: (request: FastifyRequest) => Promise<void>;

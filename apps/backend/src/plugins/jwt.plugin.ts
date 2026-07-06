@@ -3,11 +3,11 @@ import jwt from '@fastify/jwt';
 import { z } from 'zod';
 import type { FastifyInstance, FastifyRequest } from 'fastify';
 import { env } from '../config/env';
-import { UserRole, UserRoleSchema } from '@freshly/contracts';
+import { UserIdSchema, UserRole, UserRoleSchema } from '@freshly/contracts';
 import { ForbiddenError, UnauthorizedError } from '../errors/app-error';
 
 const jwtPayloadSchema = z.object({
-  userId: z.string().uuid(),
+  userId: UserIdSchema,
   role: UserRoleSchema
 });
 

@@ -7,26 +7,26 @@ import { cartService } from './cart.service';
 const s = initServer();
 
 const cartRouter = s.router(cartContract, {
-  getCart: async ({ request }) => ({ status: 200, body: await cartService.getCart(request.user.id) }),
+  getCart: async ({ request }) => ({ status: 200, body: await cartService.getCart(request.user.userId) }),
 
   addItem: async ({ request, body }) => ({
     status: 200,
-    body: await cartService.addItem(request.user.id, body.productId)
+    body: await cartService.addItem(request.user.userId, body.productId)
   }),
 
   updateItem: async ({ request, params, body }) => ({
     status: 200,
-    body: await cartService.updateItem(request.user.id, params.productId, body.quantity)
+    body: await cartService.updateItem(request.user.userId, params.productId, body.quantity)
   }),
 
   removeItem: async ({ request, params }) => ({
     status: 200,
-    body: await cartService.removeItem(request.user.id, params.productId)
+    body: await cartService.removeItem(request.user.userId, params.productId)
   }),
 
-  clearCart: async ({ request }) => ({ status: 200, body: await cartService.clearCart(request.user.id) })
+  clearCart: async ({ request }) => ({ status: 200, body: await cartService.clearCart(request.user.userId) })
 });
 
-export const cartController = fp(async (fastify: FastifyInstance) => {
+export const cartController = fp((fastify: FastifyInstance) => {
   fastify.register(s.plugin(cartRouter));
 });
