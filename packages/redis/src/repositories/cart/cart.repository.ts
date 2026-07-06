@@ -20,7 +20,9 @@ export const cartRepository = {
       const parsedQuantity = Number(quantity);
 
       if (!isValidProductId(parsedProductId) || !isValidQuantity(parsedQuantity)) {
-        throw new Error(`[Redis] Corrupted cart entry for user ${userId}: productId="${productId}", quantity="${quantity}"`);
+        throw new Error(
+          `[Redis] Corrupted cart entry for user ${userId}: productId="${productId}", quantity="${quantity}"`
+        );
       }
 
       items[parsedProductId as ProductId] = parsedQuantity;
