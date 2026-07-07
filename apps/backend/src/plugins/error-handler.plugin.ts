@@ -34,7 +34,7 @@ const logByStatus = (request: FastifyRequest, error: unknown, statusCode: number
   }
 };
 
-export const errorHandlerPlugin = fp( (app: FastifyInstance) => {
+export const errorHandlerPlugin = fp((app: FastifyInstance) => {
   app.setNotFoundHandler((request, reply) => {
     const body: ApiError = {
       code: ErrorCodes.NOT_FOUND,
