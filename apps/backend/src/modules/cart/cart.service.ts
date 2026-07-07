@@ -1,6 +1,7 @@
 import { type CartItems, cartRepository } from '@freshly/redis';
 import type { Cart, CartItem, ProductId, UserId } from '@freshly/contracts';
 import { ConflictError, NotFoundError } from '../../errors/app-error';
+import { productService } from '../product';
 
 export class CartService {
   public async getCart(userId: UserId): Promise<Cart> {
@@ -9,8 +10,6 @@ export class CartService {
   }
 
   public async addItem(userId: UserId, productId: ProductId): Promise<Cart> {
-    // TODO: update name service
-
     const product = await productService.findById(productId);
     if (!product) throw new NotFoundError('[Cart Service] Product not found');
 
@@ -42,7 +41,7 @@ export class CartService {
     const productIds = Object.keys(items).map(Number) as ProductId[];
     if (productIds.length === 0) return { items: [], total: 0, itemCount: 0 };
 
-    const products = await productRepository.findByIds(productIds);
+    const products = await productService.findByIds(productIds);
     const productMap = new Map(products.map((prod) => [prod.id, prod]));
 
     const cartItems: CartItem[] = [];
