@@ -29,7 +29,7 @@ export const AddCartItemBodySchema = z.object({
 export type AddCartItemBody = z.infer<typeof AddCartItemBodySchema>;
 
 export const UpdateCartItemBodySchema = z.object({
-  quantity: z.number().int().positive()
+  quantity: z.number().int().nonnegative()
 });
 
 export type UpdateCartItemBody = z.infer<typeof UpdateCartItemBodySchema>;
