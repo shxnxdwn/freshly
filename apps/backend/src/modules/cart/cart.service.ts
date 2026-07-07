@@ -11,17 +11,17 @@ export class CartService {
 
   public async addItem(userId: UserId, productId: ProductId): Promise<Cart> {
     const product = await productService.findById(productId);
-    if (!product) throw new NotFoundError('[Cart Service] Product not found');
+    if (!product) throw new NotFoundError('Product not found');
 
     const wasAdded = await cartRepository.addItem(userId, productId);
-    if (!wasAdded) throw new ConflictError('[Cart Service] Item already in cart');
+    if (!wasAdded) throw new ConflictError('Item already in cart');
 
     return this.getCart(userId);
   }
 
   public async updateItem(userId: UserId, productId: ProductId, quantity: number): Promise<Cart> {
     const items = await cartRepository.getItems(userId);
-    if (!(productId in items)) throw new NotFoundError('[Cart Service] Item not found in cart');
+    if (!(productId in items)) throw new NotFoundError('Item not found in cart');
 
     await cartRepository.updateItem(userId, productId, quantity);
     return this.getCart(userId);
