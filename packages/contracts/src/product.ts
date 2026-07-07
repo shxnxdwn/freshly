@@ -14,6 +14,7 @@ export const ProductSortSchema = z.enum(['price_asc', 'price_desc', 'rating', 'n
 export type ProductSort = z.infer<typeof ProductSortSchema>;
 
 export const ProductRatingSchema = z.number().min(0).max(5).multipleOf(0.01);
+export type ProductRating = z.infer<typeof ProductRatingSchema>;
 
 export const ProductSchema = z.object({
   id: ProductIdSchema,
