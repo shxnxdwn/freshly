@@ -30,11 +30,21 @@ export const CreateReviewBodySchema = z.object({
 
 export type CreateReviewBody = z.infer<typeof CreateReviewBodySchema>;
 
+export const UpdateReviewBodySchema = z.object({
+  rating: z.number().int().min(1).max(5),
+  comment: z.string().min(5).max(300).optional()
+});
+
+export type UpdateReviewBody = z.infer<typeof UpdateReviewBodySchema>;
+
+const ProductSlugParamsSchema = z.object({ slug: SlugSchema });
+const ReviewParamsSchema = z.object({ slug: SlugSchema, reviewId: ReviewIdSchema });
+
 export const reviewContract = c.router({
   getReviews: {
     method: 'GET',
     path: '/products/:slug/reviews',
-    pathParams: z.object({ slug: SlugSchema }),
+    pathParams: ProductSlugParamsSchema,
     query: PaginationQuerySchema,
     responses: {
       200: paginatedOf(ReviewSchema),
@@ -45,7 +55,7 @@ export const reviewContract = c.router({
   createReview: {
     method: 'POST',
     path: '/products/:slug/reviews',
-    pathParams: z.object({ slug: SlugSchema }),
+    pathParams: ProductSlugParamsSchema,
     body: CreateReviewBodySchema,
     responses: {
       201: ReviewSchema,
@@ -53,10 +63,21 @@ export const reviewContract = c.router({
     },
     summary: 'Create review'
   },
+  updateReview: {
+    method: 'PATCH',
+    path: '/products/:slug/reviews/:reviewId',
+    pathParams: ReviewParamsSchema,
+    body: UpdateReviewBodySchema,
+    responses: {
+      200: ReviewSchema,
+      ...CommonErrors
+    },
+    summary: 'Update own review'
+  },
   deleteReview: {
     method: 'DELETE',
     path: '/products/:slug/reviews/:reviewId',
-    pathParams: z.object({ slug: SlugSchema, reviewId: ReviewIdSchema }),
+    pathParams: ReviewParamsSchema,
     body: z.object({}),
     responses: {
       200: z.object({ success: z.literal(true) }),

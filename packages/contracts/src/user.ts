@@ -61,6 +61,6 @@ export const userContract = c.router({
       200: z.object({ success: z.literal(true) }),
       ...CommonErrors
     },
-    summary: 'Delete user profile (soft-delete)'
+    summary: 'Delete user profile'
   }
 });
