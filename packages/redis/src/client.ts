@@ -1,5 +1,8 @@
 import 'dotenv/config';
 import Redis from 'ioredis';
+import pino from 'pino';
+
+const logger = pino({ name: '@freshly/redis' });
 
 const getRedisClient = (): Redis => {
   const url = process.env.REDIS_URL;
@@ -17,7 +20,7 @@ const getRedisClient = (): Redis => {
   });
 
   client.on('error', (err) => {
-    throw new Error(`[Redis] Connection error: ${err}`);
+    logger.error({ err }, '[Redis] Connection error');
   });
 
   return client;
