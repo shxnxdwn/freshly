@@ -1,3 +1,4 @@
 export { reviewService } from './review.service';
-export { reviewController } from './review.controller';
+export { reviewRouter } from './review.router';
 export { reviewRepository } from './review.repository';
+export { reviewPlugin } from './review.plugin';

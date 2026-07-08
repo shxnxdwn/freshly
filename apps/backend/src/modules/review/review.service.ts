@@ -59,6 +59,7 @@ export class ReviewService {
     }
 
     const updated = await reviewRepository.update(reviewId, product.id, body.rating, body.comment ?? null);
+    if (!updated) throw new NotFoundError('Review not found');
     return toReview(updated);
   }
 

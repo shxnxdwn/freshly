@@ -2,7 +2,7 @@ import type { Product, ProductId, ProductsQuery } from '@freshly/contracts';
 import { productRepository } from './product.repository';
 import { toProduct } from './product.mapper';
 import { NotFoundError } from '../../errors/app-error';
-import { categoryRepository } from '../category/category.repository';
+import { categoryRepository } from '../category';
 
 export class ProductService {
   public async getProducts(query: ProductsQuery) {
