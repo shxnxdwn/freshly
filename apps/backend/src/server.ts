@@ -24,6 +24,7 @@ export const buildServer = async () => {
   const app = Fastify({
     logger: env.NODE_ENV === 'development' ? { level: 'info' } : false
   });
+
   await app.register(errorHandlerPlugin);
   await app.register(helmetPlugin);
   await app.register(corsPlugin);
