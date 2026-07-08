@@ -2,6 +2,7 @@ import fp from 'fastify-plugin';
 import websocket from '@fastify/websocket';
 import type { FastifyInstance } from 'fastify';
 import { env } from '../config/env';
+import { ErrorCodes } from '@freshly/contracts';
 
 const MAX_PAYLOAD = 1024 * 1024;
 
@@ -18,7 +19,7 @@ export const websocketPlugin = fp(async (app: FastifyInstance) => {
 
       if (origin !== env.FRONTEND_URL) {
         return reply.status(401).send({
-          code: 'UNAUTHORIZED',
+          code: ErrorCodes.UNAUTHORIZED,
           message: 'Unauthorized origin'
         });
       }

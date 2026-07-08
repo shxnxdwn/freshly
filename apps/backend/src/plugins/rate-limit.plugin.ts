@@ -2,6 +2,7 @@ import fp from 'fastify-plugin';
 import rateLimit from '@fastify/rate-limit';
 import type { FastifyInstance } from 'fastify';
 import { redis } from '@freshly/redis';
+import { ErrorCodes } from '@freshly/contracts';
 
 export const rateLimitPlugin = fp(async (app: FastifyInstance) => {
   await app.register(rateLimit, {
@@ -9,7 +10,7 @@ export const rateLimitPlugin = fp(async (app: FastifyInstance) => {
     timeWindow: '1 minute',
     redis,
     errorResponseBuilder: () => ({
-      code: 'TOO_MANY_REQUESTS',
+      code: ErrorCodes.TOO_MANY_REQUESTS,
       message: 'Rate limit exceeded, please try again later'
     })
   });
