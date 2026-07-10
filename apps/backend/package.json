@@ -19,7 +19,7 @@
     "@freshly/db": "*",
     "@freshly/redis": "*",
     "@ts-rest/fastify": "^3.52.1",
-    "argon2": "^0.43.0",
+    "bcrypt": "^6.0.0",
     "dotenv": "^16.0.0",
     "fastify": "^5.8.5",
     "fastify-plugin": "^5.1.0",
