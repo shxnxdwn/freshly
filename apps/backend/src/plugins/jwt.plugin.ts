@@ -3,15 +3,16 @@ import jwt from '@fastify/jwt';
 import { z } from 'zod';
 import type { FastifyInstance, FastifyRequest } from 'fastify';
 import { env } from '../config/env';
-import { UserIdSchema, UserRole, UserRoleSchema } from '@freshly/contracts';
+import { type UserId, UserIdSchema, UserRole, UserRoleSchema } from '@freshly/contracts';
 import { ForbiddenError, UnauthorizedError } from '../errors/app-error';
 
-const jwtPayloadSchema = z.object({
+const accessJwtPayloadSchema = z.object({
   userId: UserIdSchema,
   role: UserRoleSchema
 });
 
-export type JwtPayload = z.infer<typeof jwtPayloadSchema>;
+export type AccessJwtPayload = z.infer<typeof accessJwtPayloadSchema>;
+export type RefreshJwtPayload = { userId: UserId };
 
 export const jwtPlugin = fp(async (app: FastifyInstance) => {
   await app.register(jwt, {
@@ -43,7 +44,7 @@ export const jwtPlugin = fp(async (app: FastifyInstance) => {
       throw new UnauthorizedError('Invalid or expired access token');
     }
 
-    const parsed = jwtPayloadSchema.safeParse(decoded);
+    const parsed = accessJwtPayloadSchema.safeParse(decoded);
 
     if (!parsed.success) {
       throw new UnauthorizedError('Invalid token payload structure');
