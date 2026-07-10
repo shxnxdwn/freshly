@@ -1,8 +1,8 @@
 import type { UpdateUserBody, User, UserId } from '@freshly/contracts';
 import { userRepository } from './user.repository';
 import { toUser } from './user.mapper';
-import { authRepository } from '../auth/auth.repository';
 import { NotFoundError } from '../../errors/app-error';
+import { authRepository } from '../auth';
 
 export class UserService {
   public async getUser(userId: UserId): Promise<User> {
