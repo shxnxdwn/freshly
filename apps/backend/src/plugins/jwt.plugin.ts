@@ -19,7 +19,7 @@ export const jwtPlugin = fp(async (app: FastifyInstance) => {
     namespace: 'access',
     jwtVerify: 'verifyAccessJwt',
     jwtSign: 'signAccessJwt',
-    sign: { expiresIn: env.JWT_ACCESS_EXPIRES_IN }
+    sign: { expiresIn: `${env.JWT_ACCESS_EXPIRES_IN}ms` }
   });
 
   await app.register(jwt, {
@@ -27,7 +27,7 @@ export const jwtPlugin = fp(async (app: FastifyInstance) => {
     namespace: 'refresh',
     jwtVerify: 'verifyRefreshJwt',
     jwtSign: 'signRefreshJwt',
-    sign: { expiresIn: env.JWT_REFRESH_EXPIRES_IN },
+    sign: { expiresIn: `${env.JWT_REFRESH_EXPIRES_IN}ms` },
     cookie: {
       cookieName: 'refreshToken',
       signed: false
