@@ -23,10 +23,17 @@ export const AddressSchema = z.object({
 
 export type Address = z.infer<typeof AddressSchema>;
 
-export const CreateAddressBodySchema = AddressSchema.omit({ id: true });
+export const CreateAddressBodySchema = AddressSchema.omit({ id: true }).extend({
+  isDefault: z.boolean().default(false)
+});
+
 export type CreateAddressBody = z.infer<typeof CreateAddressBodySchema>;
 
-export const UpdateAddressBodySchema = CreateAddressBodySchema.partial();
+export const UpdateAddressBodySchema = CreateAddressBodySchema.partial().refine(
+  (data) => Object.keys(data).length > 0,
+  { message: 'At least one field must be provided' }
+);
+
 export type UpdateAddressBody = z.infer<typeof UpdateAddressBodySchema>;
 
 const AddressParamsSchema = z.object({ id: AddressIdSchema });
