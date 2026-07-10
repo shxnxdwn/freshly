@@ -26,41 +26,45 @@ export const UserSchema = z.object({
 
 export type User = z.infer<typeof UserSchema>;
 
-export const UpdateProfileBodySchema = z.object({
-  name: z.string().min(1).max(100).optional(),
-  avatar: AvatarSchema.optional()
-});
+export const UpdateUserBodySchema = z
+  .object({
+    name: z.string().min(1).max(100).optional(),
+    avatar: AvatarSchema.optional()
+  })
+  .refine((data) => Object.keys(data).length > 0, {
+    message: 'At least one field (name or avatar) must be provided'
+  });
 
-export type UpdateProfileBody = z.infer<typeof UpdateProfileBodySchema>;
+export type UpdateUserBody = z.infer<typeof UpdateUserBodySchema>;
 
 export const userContract = c.router({
-  getProfile: {
+  getUser: {
     method: 'GET',
-    path: '/user/profile',
+    path: '/user',
     responses: {
       200: UserSchema,
       ...CommonErrors
     },
-    summary: 'Get user profile'
+    summary: 'Get current user'
   },
-  updateProfile: {
+  updateUser: {
     method: 'PATCH',
-    path: '/user/profile',
-    body: UpdateProfileBodySchema,
+    path: '/user',
+    body: UpdateUserBodySchema,
     responses: {
       200: UserSchema,
       ...CommonErrors
     },
-    summary: 'Update user profile'
+    summary: 'Update current user'
   },
-  deleteProfile: {
+  deleteUser: {
     method: 'DELETE',
-    path: '/user/profile',
+    path: '/user',
     body: z.object({}),
     responses: {
       200: z.object({ success: z.literal(true) }),
       ...CommonErrors
     },
-    summary: 'Delete user profile'
+    summary: 'Delete current user'
   }
 });
