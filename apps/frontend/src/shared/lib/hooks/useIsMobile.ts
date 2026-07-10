@@ -29,4 +29,4 @@ export const useIsMobile = (options?: UseIsMobileOptions): boolean => {
   const getServerSnapshot = React.useCallback(() => serverIsMobile, [serverIsMobile]);
 
   return React.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
-}
+};

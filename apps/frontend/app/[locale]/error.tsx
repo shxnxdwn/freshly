@@ -5,18 +5,18 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import {
   AlertTriangle,
-  WifiOff,
-  ServerCrash,
+  CircleAlert,
   FileQuestion,
-  LockKeyhole,
-  ShieldOff,
   FormInput,
+  LockKeyhole,
+  ServerCrash,
+  ShieldOff,
   Timer,
-  CircleAlert
+  WifiOff
 } from 'lucide-react';
 
 import type { ClientErrorCode } from '@/shared/api/HttpError';
-import { resolveClientErrorCode, getErrorTranslationKeys } from '@/shared/lib/utils/error-utils';
+import { getErrorTranslationKeys, resolveClientErrorCode } from '@/shared/lib/utils/error-utils';
 import { Button } from '@/shared/ui/Button';
 import { Card } from '@/shared/ui/Card';
 

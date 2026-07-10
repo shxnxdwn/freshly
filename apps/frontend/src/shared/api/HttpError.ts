@@ -3,12 +3,6 @@ import type { ApiError, ErrorCode } from '@freshly/contracts';
 export type ClientErrorCode = ErrorCode | 'NETWORK_ERROR' | 'UNKNOWN_ERROR';
 
 export class HttpError extends Error {
-  public readonly status: number;
-  public readonly body: unknown;
-  public readonly isHttpError = true as const;
-  public readonly code?: ClientErrorCode;
-  public readonly details?: unknown;
-
   public static readonly STATUS = {
     UNAUTHORIZED: 401,
     FORBIDDEN: 403,
@@ -18,6 +12,11 @@ export class HttpError extends Error {
     TOO_MANY_REQUESTS: 429,
     SERVER_ERROR: 500
   } as const;
+  public readonly status: number;
+  public readonly body: unknown;
+  public readonly isHttpError = true as const;
+  public readonly code?: ClientErrorCode;
+  public readonly details?: unknown;
 
   constructor(status: number, body: unknown) {
     super(HttpError.extractMessage(body));
@@ -33,31 +32,6 @@ export class HttpError extends Error {
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, HttpError);
     }
-  }
-
-  private static isContractApiError(body: unknown): body is ApiError {
-    if (typeof body !== 'object' || body === null) return false;
-    const record = body as Record<string, unknown>;
-    return typeof record.code === 'string' && typeof record.message === 'string';
-  }
-
-  static extractMessage(body: unknown): string {
-    if (typeof body === 'string') return body;
-    if (!body) return 'HTTP Error, no body provided';
-
-    if (typeof body === 'object') {
-      const { message } = body as Record<string, unknown>;
-      if (typeof message === 'string') return message;
-    }
-
-    return 'HTTP Error';
-  }
-
-  static isHttpError(error: unknown): error is HttpError {
-    return (
-      error instanceof HttpError ||
-      (typeof error === 'object' && error !== null && 'isHttpError' in error && error.isHttpError === true)
-    );
   }
 
   get isUnauthorized(): boolean {
@@ -98,6 +72,31 @@ export class HttpError extends Error {
 
   get isNetworkError(): boolean {
     return this.status === 0;
+  }
+
+  static extractMessage(body: unknown): string {
+    if (typeof body === 'string') return body;
+    if (!body) return 'HTTP Error, no body provided';
+
+    if (typeof body === 'object') {
+      const { message } = body as Record<string, unknown>;
+      if (typeof message === 'string') return message;
+    }
+
+    return 'HTTP Error';
+  }
+
+  static isHttpError(error: unknown): error is HttpError {
+    return (
+      error instanceof HttpError ||
+      (typeof error === 'object' && error !== null && 'isHttpError' in error && error.isHttpError === true)
+    );
+  }
+
+  private static isContractApiError(body: unknown): body is ApiError {
+    if (typeof body !== 'object' || body === null) return false;
+    const record = body as Record<string, unknown>;
+    return typeof record.code === 'string' && typeof record.message === 'string';
   }
 
   toJSON(): Record<string, unknown> {

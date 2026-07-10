@@ -4,8 +4,7 @@ import { HttpError } from '@/shared/api/HttpError';
 import { apiFetcher } from '@/shared/api/apiFetcher';
 
 export type ApiResponse<TSuccess, TError> =
-  | { status: 200 | 201 | 204; body: TSuccess }
-  | { status: Exclude<number, 200 | 201 | 204>; body: TError };
+  { status: 200 | 201 | 204; body: TSuccess } | { status: Exclude<number, 200 | 201 | 204>; body: TError };
 
 export const isSuccessStatus = (status: number) => status >= 200 && status < 300;
 

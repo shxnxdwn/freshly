@@ -1,6 +1,6 @@
+import type { ClientErrorCode } from '@/shared/api/HttpError';
 import { HttpError } from '@/shared/api/HttpError';
 import { DomainErrorCodes } from '@freshly/contracts';
-import type { ClientErrorCode } from '@/shared/api/HttpError';
 
 const HTTP_STATUS_TO_CODE: Record<number, ClientErrorCode> = {
   0: 'NETWORK_ERROR',
