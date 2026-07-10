@@ -1,6 +1,7 @@
 import type { UpdateUserBody, User, UserId } from '@freshly/contracts';
 import { userRepository } from './user.repository';
 import { toUser } from './user.mapper';
+import { authRepository } from '../auth/auth.repository';
 import { NotFoundError } from '../../errors/app-error';
 
 export class UserService {
@@ -11,13 +12,14 @@ export class UserService {
   }
 
   public async updateUser(userId: UserId, body: UpdateUserBody): Promise<User> {
-    const row = await userRepository.updateById(userId, body);
+    const row = await userRepository.update(userId, body);
     if (!row) throw new NotFoundError('User not found');
     return toUser(row);
   }
 
   public async deleteUser(userId: UserId): Promise<void> {
-    await userRepository.deleteById(userId);
+    await userRepository.delete(userId);
+    await authRepository.deleteAllForUser(userId);
   }
 }
 
